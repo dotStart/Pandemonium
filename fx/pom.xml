@@ -44,6 +44,12 @@
             <artifactId>controlsfx</artifactId>
         </dependency>
 
+        <!-- Inject -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
         <!-- Utilities -->
         <dependency>
             <groupId>com.google.code.findbugs</groupId>

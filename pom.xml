@@ -105,6 +105,13 @@
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
+            <!-- Injection -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>4.3.5.RELEASE</version>
+            </dependency>
+
             <!-- Native Access -->
             <dependency>
                 <groupId>net.java.dev.jna</groupId>
@@ -129,11 +136,6 @@
                 <groupId>io.netty</groupId>
                 <artifactId>netty-buffer</artifactId>
                 <version>5.0.0.Alpha2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>4.3.5.RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>com.google.code.findbugs</groupId>

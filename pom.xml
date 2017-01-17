@@ -278,6 +278,7 @@
         <module>game</module>
         <module>memory</module>
         <module>native-win32</module>
+        <module>ui</module>
         <module>web</module>
     </modules>
 </project>

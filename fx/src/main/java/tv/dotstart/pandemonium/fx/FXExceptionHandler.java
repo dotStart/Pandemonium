@@ -16,6 +16,8 @@
  */
 package tv.dotstart.pandemonium.fx;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.controlsfx.dialog.ExceptionDialog;
 import org.springframework.stereotype.Component;
 
@@ -31,16 +33,15 @@ import javafx.application.Platform;
  */
 @Component
 public class FXExceptionHandler implements Thread.UncaughtExceptionHandler {
+    private static final Logger logger = LogManager.getFormatterLogger(FXExceptionHandler.class);
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void uncaughtException(@Nonnull Thread thread, @Nonnull Throwable throwable) {
+        logger.error("Encountered uncaught exception: " + throwable.getMessage(), throwable);
         ExceptionDialog dialog = new ExceptionDialog(throwable);
-        dialog.setTitle("Application Error");
-        dialog.setHeaderText("An unexpected error has occurred.");
-        dialog.setContentText("The application has encountered an unexpected state and is unable to recover. Please report this issue to the Pandemonium developers as a bug.");
 
         if (Platform.isFxApplicationThread()) {
             dialog.showAndWait();

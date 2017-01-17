@@ -70,6 +70,11 @@
             <!-- Modules -->
             <dependency>
                 <groupId>tv.dotstart.pandemonium</groupId>
+                <artifactId>effect</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>tv.dotstart.pandemonium</groupId>
                 <artifactId>fx</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
@@ -262,6 +267,7 @@
     </build>
 
     <modules>
+        <module>effect</module>
         <module>fx</module>
         <module>game</module>
         <module>memory</module>

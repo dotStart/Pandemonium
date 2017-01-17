@@ -21,8 +21,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import tv.dotstart.pandemonium.fx.control.TitleBar?>
 <?import tv.dotstart.pandemonium.fx.control.Window?>
+<?import java.net.URL?>
 <fx:root xmlns:fx="http://javafx.com/fxml" type="tv.dotstart.pandemonium.fx.control.Window"
          styleClass="window">
+
+    <stylesheets>
+        <URL value="@/css/control/Window.css"/>
+    </stylesheets>
+
     <children>
         <TitleBar fx:id="titleBar"/>
 
@@ -30,7 +36,7 @@
             <VBox fx:id="contentBox" styleClass="content"/>
 
             <AnchorPane pickOnBounds="false">
-                <Label fx:id="resizeGrip" styleClass="size-grip" onMouseDragged="#onMouseDragged"
+                <Label fx:id="resizeGrip" styleClass="resize-grip" onMouseDragged="#onMouseDragged"
                        onMousePressed="#onMousePressed" AnchorPane.bottomAnchor="0"
                        AnchorPane.rightAnchor="0"/>
             </AnchorPane>

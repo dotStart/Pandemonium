@@ -105,6 +105,8 @@ public class Window extends VBox implements Initializable {
         Bindings.bindContent(this.titleBar.getButtons(), this.buttons);
         Bindings.bindContent(this.contentBox.getChildren(), this.content);
 
+        this.resizeGrip.visibleProperty().bind(this.resize);
+        this.resizeGrip.managedProperty().bind(this.resizeGrip.visibleProperty());
         this.resizeGrip.setGraphic(WindowIcons.getInstance().create(WindowIcons.Glyph.RESIZE_GRIP));
     }
 

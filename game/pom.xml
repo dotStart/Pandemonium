@@ -31,6 +31,10 @@
     <artifactId>game</artifactId>
     <packaging>jar</packaging>
 
+    <!-- Artifact Metadata -->
+    <name>Pandemonium Game</name>
+    <description>Provides game and effect metadata.</description>
+
     <!-- Dependencies -->
     <dependencies>
         <!-- Modules -->

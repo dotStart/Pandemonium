@@ -31,6 +31,10 @@
     <artifactId>memory</artifactId>
     <packaging>jar</packaging>
 
+    <!-- Artifact Metadata -->
+    <name>Pandemonium Memory</name>
+    <description>Provides a system independent abstraction for accessing game memory.</description>
+
     <!-- Dependencies -->
     <dependencies>
         <!-- Native Access -->

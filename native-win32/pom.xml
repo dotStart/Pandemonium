@@ -31,6 +31,10 @@
     <artifactId>native-win32</artifactId>
     <packaging>jar</packaging>
 
+    <!-- Artifact Metadata -->
+    <name>Pandemonium Native (Win32)</name>
+    <description>Provides system dependent implementations for accessing games on Win32 based systems.</description>
+
     <!-- Dependencies -->
     <dependencies>
         <!-- Modules -->

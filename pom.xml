@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2017 Johannes Donath <me@dotstart.tv>
+  ~ and other copyright owners as documented in the project's IP log.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Artifact Information -->
+    <groupId>tv.dotstart.pandemonium</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- Artifact Metadata -->
+    <name>Pandemonium</name>
+    <description>Provides some chaos for your favorite speedgame.</description>
+    <inceptionYear>2017</inceptionYear>
+
+    <developers>
+        <developer>
+            <name>Johannes Donath</name>
+            <email>me@dotstart.tv</email>
+            <url>https://www.dotstart.tv</url>
+            <timezone>Europe/Berlin</timezone>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/dotStart/Pandemonium/issues</url>
+    </issueManagement>
+
+    <ciManagement>
+        <system>Atlassian Bamboo</system>
+        <url>https://www.basinmc.org/ci/browse/DOT-PAN</url>
+    </ciManagement>
+
+    <scm>
+        <url>https://github.com/dotStart/Pandemonium</url>
+        <connection>scm:git:https://github.com/dotStart/Pandemonium.git</connection>
+        <developerConnection>scm:git:git://github.com:dotStart/Pandemonium.git</developerConnection>
+    </scm>
+
+    <!-- Dependencies -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Native Access -->
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna</artifactId>
+                <version>4.3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna-platform</artifactId>
+                <version>4.3.0</version>
+            </dependency>
+
+            <!-- UI -->
+            <dependency>
+                <groupId>org.controlsfx</groupId>
+                <artifactId>controlsfx</artifactId>
+                <version>8.40.12</version>
+            </dependency>
+
+            <!-- Utilities -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-buffer</artifactId>
+                <version>5.0.0.Alpha2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice</artifactId>
+                <version>4.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>jsr305</artifactId>
+                <version>3.0.1</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>2.7</version>
+            </dependency>
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>0.9.10</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Build Settings -->
+    <build>
+        <finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
+        <defaultGoal>clean package</defaultGoal>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.6.0</version>
+
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.lesscss</groupId>
+                    <artifactId>lesscss-maven-plugin</artifactId>
+                    <version>1.7.0.1.1</version>
+
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+
+                    <configuration>
+                        <sourceDirectory>${project.basedir}/src/main/less</sourceDirectory>
+                        <outputDirectory>${project.build.outputDirectory}/css</outputDirectory>
+                        <compress>true</compress>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.0.2</version>
+
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>2.4.3</version>
+
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>shade</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+
+                    <configuration>
+                        <minimizeJar>true</minimizeJar>
+
+                        <filters>
+                            <filter>
+                                <artifact>${project.groupId}:*</artifact>
+
+                                <includes>
+                                    <include>**</include>
+                                </includes>
+                            </filter>
+                        </filters>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                    <artifactId>launch4j-maven-plugin</artifactId>
+                    <version>1.7.10</version>
+
+                    <executions>
+                        <execution>
+                            <id>l4j</id>
+                            <phase>package</phase>
+
+                            <goals>
+                                <goal>launch4j</goal>
+                            </goals>
+
+                            <configuration>
+                                <headerType>gui</headerType>
+                                <outfile>${project.build.directory}/${project.build.finalName}.exe</outfile>
+                                <jar>${project.build.directory}/${project.build.finalName}.jar</jar>
+                                <icon>${project.basedir}/src/main/resources/icon/application16.ico</icon>
+                                <dontWrapJar>false</dontWrapJar>
+                                <errTitle>Chaos Manager</errTitle>
+
+                                <jre>
+                                    <minVersion>1.8.0</minVersion>
+                                </jre>
+
+                                <versionInfo>
+                                    <fileVersion>1.0.0.0</fileVersion>
+                                    <txtFileVersion>${project.version}</txtFileVersion>
+                                    <fileDescription>${project.description}</fileDescription>
+                                    <copyright>Copyright (C) 2016 Johannes Donath</copyright>
+                                    <productVersion>1.0.0.0</productVersion>
+                                    <txtProductVersion>${project.version}</txtProductVersion>
+                                    <productName>${project.name}</productName>
+                                    <internalName>${project.artifactId}</internalName>
+                                    <originalFilename>${project.build.finalName}.exe</originalFilename>
+                                </versionInfo>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <modules></modules>
+</project>

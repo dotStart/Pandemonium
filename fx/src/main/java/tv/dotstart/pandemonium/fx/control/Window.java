@@ -25,6 +25,8 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import javafx.application.ConditionalFeature;
+import javafx.application.Platform;
 import javafx.beans.DefaultProperty;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -67,7 +69,7 @@ public class Window extends VBox implements Initializable {
     private double dragInitX;
     private double dragInitY;
 
-    // <editor-fold text="FXML">
+    // <editor-fold desc="FXML">
     @FXML
     private TitleBar titleBar;
     @FXML
@@ -95,6 +97,10 @@ public class Window extends VBox implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        if (Platform.isSupported(ConditionalFeature.TRANSPARENT_WINDOW)) {
+            this.getStyleClass().add("transparent");
+        }
+
         this.titleBar.iconProperty().bind(this.icon);
         this.titleBar.titleProperty().bindBidirectional(this.title);
         this.titleBar.moveProperty().bindBidirectional(this.move);

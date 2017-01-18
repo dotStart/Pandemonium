@@ -34,10 +34,13 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import javafx.application.ConditionalFeature;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -60,6 +63,19 @@ public class FX {
     public FX(@Nonnull ApplicationContext ctx, @Nonnull MessageSource messageSource) {
         this.ctx = ctx;
         this.messageSource = messageSource;
+    }
+
+    /**
+     * Augments the scene in order to provide it with default values based on its root or other
+     * circumstances.
+     */
+    @Nonnull
+    private Scene augmentScene(@Nonnull Scene scene) {
+        if (Platform.isSupported(ConditionalFeature.TRANSPARENT_WINDOW) && scene.getRoot() instanceof tv.dotstart.pandemonium.fx.control.Window) {
+            scene.setFill(Color.TRANSPARENT);
+        }
+
+        return scene;
     }
 
     /**
@@ -90,7 +106,7 @@ public class FX {
      */
     @Nonnull
     public Scene createScene(@Nonnull Class<?> controllerType) throws IllegalArgumentException, IllegalStateException {
-        return new Scene(this.loadResource(controllerType));
+        return this.augmentScene(new Scene(this.loadResource(controllerType)));
     }
 
     /**
@@ -102,7 +118,7 @@ public class FX {
      */
     @Nonnull
     public Scene createScene(@Nonnull String resourceName, @Nullable ClassLoader loader) throws IllegalArgumentException, IllegalStateException {
-        return new Scene(this.loadResource(resourceName, loader));
+        return this.augmentScene(new Scene(this.loadResource(resourceName, loader)));
     }
 
     /**
@@ -211,6 +227,10 @@ public class FX {
 
         StageBuilder(@Nonnull Scene scene) {
             this.scene = scene;
+
+            if (Platform.isSupported(ConditionalFeature.TRANSPARENT_WINDOW) && scene.getRoot() instanceof tv.dotstart.pandemonium.fx.control.Window) {
+                this.style = StageStyle.TRANSPARENT;
+            }
         }
 
         /**

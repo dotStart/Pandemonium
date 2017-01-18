@@ -36,7 +36,7 @@ public class IconButton extends Button {
     private final StringProperty glyphName = new SimpleStringProperty();
 
     public IconButton() {
-        this.graphicProperty().bind(Bindings.createObjectBinding(this::updateGraphic));
+        this.graphicProperty().bind(Bindings.createObjectBinding(this::updateGraphic, this.fontName, this.glyphName));
     }
 
     /**
@@ -51,35 +51,39 @@ public class IconButton extends Button {
             return null;
         }
 
-        GlyphFont font = GlyphFontRegistry.font(fontName);
+        GlyphFont font = GlyphFontRegistry.font(this.fontName.get());
 
         if (font == null) {
             return null;
         }
 
-        return font.create(glyphName);
+        return font.create(this.glyphName.get());
     }
 
     // <editor-fold desc="Getters & Setters">
 
-    @Nullable
     public String getFontName() {
         return this.fontName.get();
     }
 
-    @Nonnull
     public StringProperty fontNameProperty() {
         return this.fontName;
     }
 
-    @Nullable
+    public void setFontName(String fontName) {
+        this.fontName.set(fontName);
+    }
+
     public String getGlyphName() {
         return this.glyphName.get();
     }
 
-    @Nonnull
     public StringProperty glyphNameProperty() {
         return this.glyphName;
+    }
+
+    public void setGlyphName(String glyphName) {
+        this.glyphName.set(glyphName);
     }
     // </editor-fold>
 }

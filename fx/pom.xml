@@ -38,6 +38,12 @@
 
     <!-- Dependencies -->
     <dependencies>
+        <!-- Modules -->
+        <dependency>
+            <groupId>tv.dotstart.pandemonium</groupId>
+            <artifactId>game</artifactId>
+        </dependency>
+
         <!-- UI -->
         <dependency>
             <groupId>org.controlsfx</groupId>

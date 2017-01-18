@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.Button?>
 <?import java.net.URL?>
-<fx:root xmlns:fx="http://javafx.com/fxml" type="tv.dotstart.pandemonium.fx.control.TitleBar" styleClass="title-bar" alignment="CENTER_LEFT" onMousePressed="#onMousePressed" onMouseDragged="#onMouseDragged">
+<fx:root xmlns:fx="http://javafx.com/fxml" type="tv.dotstart.pandemonium.fx.control.TitleBar" styleClass="title-bar" onMousePressed="#onMousePressed" onMouseDragged="#onMouseDragged">
     <stylesheets>
         <URL value="@/css/control/TitleBar.css"/>
     </stylesheets>

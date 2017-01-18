@@ -18,6 +18,8 @@ package tv.dotstart.pandemonium.fx;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.MessageSourceResourceBundle;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -51,10 +54,12 @@ public class FX {
     private static final String RESOURCE_PATTERN = "fxml/%s.fxml";
 
     private final ApplicationContext ctx;
+    private final MessageSource messageSource;
 
     @Autowired
-    public FX(@Nonnull ApplicationContext ctx) {
+    public FX(@Nonnull ApplicationContext ctx, @Nonnull MessageSource messageSource) {
         this.ctx = ctx;
+        this.messageSource = messageSource;
     }
 
     /**
@@ -71,6 +76,7 @@ public class FX {
         loader.setCharset(StandardCharsets.UTF_8);
         loader.setControllerFactory(this.ctx::getBean);
         loader.setClassLoader(classLoader);
+        loader.setResources(new MessageSourceResourceBundle(this.messageSource, Locale.ENGLISH)); // TODO: Locale Configuration
         return loader;
     }
 

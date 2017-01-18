@@ -37,6 +37,12 @@
 
     <!-- Dependencies -->
     <dependencies>
+        <!-- Modules -->
+        <dependency>
+            <groupId>tv.dotstart.pandemonium</groupId>
+            <artifactId>game</artifactId>
+        </dependency>
+
         <!-- Utilities -->
         <dependency>
             <groupId>com.google.code.findbugs</groupId>

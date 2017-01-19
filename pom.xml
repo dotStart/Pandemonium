@@ -300,6 +300,7 @@
         <module>game</module>
         <module>memory</module>
         <module>module</module>
+        <module>preset</module>
         <module>ui</module>
         <module>web</module>
 

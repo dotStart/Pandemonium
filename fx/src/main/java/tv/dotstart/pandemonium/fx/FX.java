@@ -16,6 +16,7 @@
  */
 package tv.dotstart.pandemonium.fx;
 
+import org.controlsfx.control.PopOver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
@@ -31,6 +32,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -94,6 +96,31 @@ public class FX {
         loader.setClassLoader(classLoader);
         loader.setResources(new MessageSourceResourceBundle(this.messageSource, Locale.ENGLISH)); // TODO: Locale Configuration
         return loader;
+    }
+
+    /**
+     * Creates a new popover builder using a JavaFX controller definition.
+     *
+     * @throws IllegalArgumentException when the supplied resource name does not actually exist
+     *                                  within the loader or the passed controller type is not
+     *                                  annotated using {@link ApplicationWindow}.
+     * @throws IllegalStateException    when the supplied resource fails loading.
+     */
+    @Nonnull
+    public PopOverBuilder createPopOver(@Nonnull Class<?> controllerType) throws IllegalArgumentException, IllegalStateException {
+        return new PopOverBuilder(this.loadResource(controllerType));
+    }
+
+    /**
+     * Creates a new popover factory using an FXML document as its root.
+     *
+     * @throws IllegalArgumentException when the supplied resource name does not actually exist
+     *                                  within the loader.
+     * @throws IllegalStateException    when the supplied resource fails loading.
+     */
+    @Nonnull
+    public PopOverBuilder createPopOver(@Nonnull String resourceName, @Nullable ClassLoader loader) throws IllegalArgumentException, IllegalStateException {
+        return new PopOverBuilder(this.loadResource(resourceName, loader));
     }
 
     /**
@@ -207,6 +234,91 @@ public class FX {
         } catch (IOException ex) {
             throw new IllegalStateException("Failed to load FXML resource: " + ex.getMessage(), ex);
         }
+    }
+
+    /**
+     * Provides a factory for popover instances.
+     */
+    public class PopOverBuilder {
+        private final Node root;
+
+        private String title = null;
+        private PopOver.ArrowLocation arrowLocation = PopOver.ArrowLocation.TOP_CENTER;
+        private boolean autoHide = true;
+
+        PopOverBuilder(@Nonnull Node root) {
+            this.root = root;
+        }
+
+        /**
+         * Builds a new popover instance.
+         */
+        @Nonnull
+        public PopOver build() {
+            PopOver popOver = new PopOver(this.root);
+
+            if (this.title != null) {
+                popOver.setTitle(this.title);
+            }
+
+            if (this.arrowLocation != null) {
+                popOver.setArrowLocation(this.arrowLocation);
+            }
+
+            if (!this.autoHide) {
+                popOver.setAutoHide(false);
+            }
+
+            return popOver;
+        }
+
+        /**
+         * Builds a new popover instance and shows it at the specified location within the window.
+         */
+        @Nonnegative
+        public PopOver buildAndShow(@Nonnull Window window, @Nonnegative double anchorX, double anchorY) {
+            PopOver popOver = this.build();
+            popOver.show(window, anchorX, anchorY);
+            return popOver;
+        }
+
+        /**
+         * Builds a new popover instance and shows it at the specified node location.
+         */
+        @Nonnegative
+        public PopOver buildAndShow(@Nonnull Node owner, @Nonnegative double anchorX, double anchorY) {
+            PopOver popOver = this.build();
+            popOver.show(owner, anchorX, anchorY);
+            return popOver;
+        }
+
+        // <editor-fold desc="Getters & Setters">
+        @Nullable
+        public String getTitle() {
+            return this.title;
+        }
+
+        public void setTitle(@Nullable String title) {
+            this.title = title;
+        }
+
+        @Nullable
+        public PopOver.ArrowLocation getArrowLocation() {
+            return this.arrowLocation;
+        }
+
+        public void setArrowLocation(@Nullable PopOver.ArrowLocation arrowLocation) {
+            this.arrowLocation = arrowLocation;
+        }
+
+        public boolean isAutoHide() {
+            return this.autoHide;
+        }
+
+        public void setAutoHide(boolean autoHide) {
+            this.autoHide = autoHide;
+        }
+        // </editor-fold>
     }
 
     /**
@@ -356,7 +468,6 @@ public class FX {
             return this;
         }
         // </editor-fold>
-
 
         /**
          * {@inheritDoc}

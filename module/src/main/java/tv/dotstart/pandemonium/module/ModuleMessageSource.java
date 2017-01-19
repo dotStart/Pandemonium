@@ -30,14 +30,18 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import tv.dotstart.pandemonium.fx.localization.ConfigurationAwareMessageSource;
+
 /**
  * Provides a modular message source which resolves against multiple child sources.
  *
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
-public class ModuleMessageSource extends AbstractMessageSource {
+public class ModuleMessageSource extends AbstractMessageSource implements ConfigurationAwareMessageSource {
     private final LinkedList<MessageSource> childSources = new LinkedList<>();
     private final ReadWriteLock childSourceLock = new ReentrantReadWriteLock();
+
+    private final Locale locale = Locale.ENGLISH; // TODO: Poll from configuration
 
     /**
      * Adds a message source to the list of children.
@@ -50,6 +54,24 @@ public class ModuleMessageSource extends AbstractMessageSource {
         } finally {
             this.childSourceLock.writeLock().unlock();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
+    @Override
+    public Locale getConfiguredLocale() {
+        return this.locale;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
+    @Override
+    public String getMessage(@Nonnull String code, @Nonnull Object... arguments) {
+        return this.getMessage(code, arguments, this.locale);
     }
 
     /**

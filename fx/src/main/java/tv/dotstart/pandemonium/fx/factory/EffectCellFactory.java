@@ -30,16 +30,17 @@ import javafx.util.Callback;
 import tv.dotstart.pandemonium.effect.EffectConfiguration;
 import tv.dotstart.pandemonium.effect.EffectFactory;
 import tv.dotstart.pandemonium.fx.control.game.EffectCell;
+import tv.dotstart.pandemonium.fx.localization.ConfigurationAwareMessageSource;
 
 /**
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
 @Component
 public class EffectCellFactory implements Callback<ListView<EffectConfiguration>, ListCell<EffectConfiguration>> {
-    private final MessageSource messageSource;
+    private final ConfigurationAwareMessageSource messageSource;
 
     @Autowired
-    public EffectCellFactory(@Nonnull MessageSource messageSource) {
+    public EffectCellFactory(@Nonnull ConfigurationAwareMessageSource messageSource) {
         this.messageSource = messageSource;
     }
 
@@ -59,8 +60,8 @@ public class EffectCellFactory implements Callback<ListView<EffectConfiguration>
                 }
 
                 EffectCell cell = new EffectCell();
-                cell.setTitle(EffectCellFactory.this.messageSource.getMessage(EffectFactory.getTitleLocalizationKey(item.getEffectFactory()), new Object[0], Locale.ENGLISH)); // TODO
-                cell.setDescription(EffectCellFactory.this.messageSource.getMessage(EffectFactory.getDescriptionLocalizationKey(item.getEffectFactory()), new Object[0], Locale.ENGLISH)); // TODO
+                cell.setTitle(EffectCellFactory.this.messageSource.getMessage(EffectFactory.getTitleLocalizationKey(item.getEffectFactory())));
+                cell.setDescription(EffectCellFactory.this.messageSource.getMessage(EffectFactory.getDescriptionLocalizationKey(item.getEffectFactory())));
                 item.activeProperty().bind(cell.activeProperty());
 
                 if (this.getIndex() == 0) {

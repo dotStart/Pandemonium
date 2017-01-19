@@ -48,6 +48,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import tv.dotstart.pandemonium.fx.annotation.ApplicationWindow;
+import tv.dotstart.pandemonium.fx.localization.ConfigurationAwareMessageSource;
 
 /**
  * Provides a helper implementation which is used to simplify the creation of application windows.
@@ -59,10 +60,10 @@ public class FX {
     private static final String RESOURCE_PATTERN = "fxml/%s.fxml";
 
     private final ApplicationContext ctx;
-    private final MessageSource messageSource;
+    private final ConfigurationAwareMessageSource messageSource;
 
     @Autowired
-    public FX(@Nonnull ApplicationContext ctx, @Nonnull MessageSource messageSource) {
+    public FX(@Nonnull ApplicationContext ctx, @Nonnull ConfigurationAwareMessageSource messageSource) {
         this.ctx = ctx;
         this.messageSource = messageSource;
     }
@@ -94,7 +95,7 @@ public class FX {
         loader.setCharset(StandardCharsets.UTF_8);
         loader.setControllerFactory(this.ctx::getBean);
         loader.setClassLoader(classLoader);
-        loader.setResources(new MessageSourceResourceBundle(this.messageSource, Locale.ENGLISH)); // TODO: Locale Configuration
+        loader.setResources(new MessageSourceResourceBundle(this.messageSource, this.messageSource.getConfiguredLocale()));
         return loader;
     }
 

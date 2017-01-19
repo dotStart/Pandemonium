@@ -28,6 +28,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
 import tv.dotstart.pandemonium.fx.control.game.GameCell;
+import tv.dotstart.pandemonium.fx.localization.ConfigurationAwareMessageSource;
 import tv.dotstart.pandemonium.game.Game;
 
 /**
@@ -35,10 +36,10 @@ import tv.dotstart.pandemonium.game.Game;
  */
 @Component
 public class GameCellFactory implements Callback<ListView<Game>, ListCell<Game>> {
-    private final MessageSource messageSource;
+    private final ConfigurationAwareMessageSource messageSource;
 
     @Autowired
-    public GameCellFactory(@Nonnull MessageSource messageSource) {
+    public GameCellFactory(@Nonnull ConfigurationAwareMessageSource messageSource) {
         this.messageSource = messageSource;
     }
 
@@ -59,7 +60,7 @@ public class GameCellFactory implements Callback<ListView<Game>, ListCell<Game>>
 
                 GameCell cell = new GameCell();
                 cell.setImage(Game.getIcon(item));
-                cell.setTitle(GameCellFactory.this.messageSource.getMessage(Game.getTitleLocalizationKey(item), new Object[0], Locale.ENGLISH)); // TODO: Language Configuration
+                cell.setTitle(GameCellFactory.this.messageSource.getMessage(Game.getTitleLocalizationKey(item)));
 
                 this.setGraphic(cell);
             }

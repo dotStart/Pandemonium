@@ -30,16 +30,18 @@
     </stylesheets>
 
     <children>
-        <TitleBar fx:id="titleBar"/>
+        <VBox styleClass="inner">
+            <TitleBar fx:id="titleBar"/>
 
-        <StackPane VBox.vgrow="ALWAYS">
-            <VBox fx:id="contentBox" styleClass="content"/>
+            <StackPane VBox.vgrow="ALWAYS">
+                <VBox fx:id="contentBox" styleClass="content"/>
 
-            <AnchorPane pickOnBounds="false">
-                <Label fx:id="resizeGrip" styleClass="resize-grip" onMouseDragged="#onMouseDragged"
-                       onMousePressed="#onMousePressed" AnchorPane.bottomAnchor="0"
-                       AnchorPane.rightAnchor="0"/>
-            </AnchorPane>
-        </StackPane>
+                <AnchorPane pickOnBounds="false">
+                    <Label fx:id="resizeGrip" styleClass="resize-grip" onMouseDragged="#onMouseDragged"
+                           onMousePressed="#onMousePressed" AnchorPane.bottomAnchor="0"
+                           AnchorPane.rightAnchor="0"/>
+                </AnchorPane>
+            </StackPane>
+        </VBox>
     </children>
 </fx:root>

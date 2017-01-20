@@ -23,6 +23,7 @@ import org.springframework.context.support.AbstractMessageSource;
 import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -47,8 +48,8 @@ public class ModuleMessageSource extends AbstractMessageSource implements Config
     private final Locale locale = Locale.ENGLISH; // TODO: Poll from configuration
 
     @Autowired
-    public ModuleMessageSource(@Nonnull MessageSource uiMessageSource) {
-        this.childSources.add(uiMessageSource);
+    public ModuleMessageSource(@Nonnull Collection<MessageSource> messageSources) {
+        this.childSources.addAll(messageSources);
     }
 
     /**

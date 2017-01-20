@@ -42,7 +42,7 @@ public class UILocalizationConfiguration {
      */
     @Bean
     @Nonnull
-    public MessageSource gameMessageSource(@Nonnull ModuleMessageSource parentMessageSource) {
+    public MessageSource gameMessageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename("localization/game");
         messageSource.setBundleClassLoader(this.getClass().getClassLoader());
@@ -51,7 +51,6 @@ public class UILocalizationConfiguration {
             messageSource.setCacheMillis(1);
         }
 
-        parentMessageSource.addSource(messageSource);
         return messageSource;
     }
 

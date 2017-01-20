@@ -62,7 +62,7 @@ public class EffectCellFactory implements Callback<ListView<EffectConfiguration>
                 EffectCell cell = new EffectCell();
                 cell.setTitle(EffectCellFactory.this.messageSource.getMessage(EffectFactory.getTitleLocalizationKey(item.getEffectFactory())));
                 cell.setDescription(EffectCellFactory.this.messageSource.getMessage(EffectFactory.getDescriptionLocalizationKey(item.getEffectFactory())));
-                item.activeProperty().bind(cell.activeProperty());
+                cell.activeProperty().bindBidirectional(item.activeProperty());
 
                 if (this.getIndex() == 0) {
                     cell.getStyleClass().add("first");

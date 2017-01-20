@@ -16,9 +16,11 @@
  */
 package tv.dotstart.pandemonium.module;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.AbstractMessageSource;
+import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
 import java.util.LinkedList;
@@ -37,11 +39,17 @@ import tv.dotstart.pandemonium.fx.localization.ConfigurationAwareMessageSource;
  *
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
+@Component
 public class ModuleMessageSource extends AbstractMessageSource implements ConfigurationAwareMessageSource {
     private final LinkedList<MessageSource> childSources = new LinkedList<>();
     private final ReadWriteLock childSourceLock = new ReentrantReadWriteLock();
 
     private final Locale locale = Locale.ENGLISH; // TODO: Poll from configuration
+
+    @Autowired
+    public ModuleMessageSource(@Nonnull MessageSource uiMessageSource) {
+        this.childSources.add(uiMessageSource);
+    }
 
     /**
      * Adds a message source to the list of children.

@@ -60,7 +60,7 @@ public class UILocalizationConfiguration {
      */
     @Bean
     @Nonnull
-    public MessageSource uiMessageSource(@Nonnull ModuleMessageSource parentMessageSource) {
+    public MessageSource uiMessageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename("localization/ui");
         messageSource.setBundleClassLoader(this.getClass().getClassLoader());
@@ -69,7 +69,6 @@ public class UILocalizationConfiguration {
             messageSource.setCacheMillis(1);
         }
 
-        parentMessageSource.addSource(messageSource);
         return messageSource;
     }
 }

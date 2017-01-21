@@ -63,4 +63,18 @@ public interface Process {
      * @throws ProcessStateException when the process state prevents access to modules.
      */
     boolean hasModule(@Nonnull String moduleName) throws ProcessStateException;
+
+    /**
+     * Opens the process for reading/writing.
+     *
+     * @throws ProcessStateException when the process state prevents access.
+     */
+    void open() throws ProcessStateException;
+
+    /**
+     * Closes the process.
+     *
+     * @throws ProcessStateException when the process state prevents access.
+     */
+    void close() throws ProcessStateException;
 }

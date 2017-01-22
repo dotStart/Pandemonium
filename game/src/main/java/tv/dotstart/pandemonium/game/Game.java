@@ -16,16 +16,21 @@
  */
 package tv.dotstart.pandemonium.game;
 
+import org.controlsfx.tools.Platform;
+
 import java.net.URL;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import javafx.scene.image.Image;
 import tv.dotstart.pandemonium.effect.EffectFactory;
+import tv.dotstart.pandemonium.game.matcher.ExecutableMatcher;
+import tv.dotstart.pandemonium.game.matcher.ModuleMatcher;
 
 /**
  * Provides a game and the effects available to them as well as the information necessary to locate
@@ -60,32 +65,17 @@ public interface Game {
     Set<EffectFactory> getEffectFactories();
 
     /**
-     * Retrieves a set of known executable names which are considered to belong to this game.
+     * Retrieves a set of known executable matchers.
      *
-     * This method is required to always return at least one executable name and may additionally
-     * include names for different platforms. When at least one of the executable names matches,
-     * the process will be evaluated for compatibility against this definition.
+     * This method is required to at least one matcher. If no matchers are provided, no process
+     * will
+     * be located for attachment and thus no action will be taken.
      *
-     * If required, definitions may also declare a set of required module names using {@link
-     * #getModuleNames()} (which is especially useful when dealing with engine implementations which
-     * make use of DLLs in order to contain their specific game logic).
+     * The provided matchers will be applied one-by-one until at least one matcher returns true or
+     * the set is exceeded.
      */
     @Nonnull
-    Set<String> getExecutableNames();
-
-    /**
-     * Retrieves a set of known executable sizes which are valid for use with this definition.
-     *
-     * If this method returns a set of at least one value, matching executables will be evaluated
-     * for their size against the values within the returned set.
-     *
-     * If none of the sizes returned by this method match, the process will be considered
-     * incompatible and marked as such within the application UI.
-     */
-    @Nonnull
-    default Set<Long> getExecutableSizes() {
-        return Collections.emptySet();
-    }
+    Set<ExecutableMatcher> getExecutableMatchers();
 
     /**
      * Retrieves an icon URL which is used to reference this game definition within the application
@@ -126,31 +116,21 @@ public interface Game {
     Metadata getMetadata();
 
     /**
-     * Retrieves a set of known module names which are considered to belong to this game.
+     * Retrieves a set of module matchers.
      *
-     * When a non-empty set is returned from this method, the modules provided by a matching
-     * executable will be checked against this list. If none of the modules within this list are
-     * present, the executable won't be considered an instance of this game definition.
+     * If one or more matchers are returned by this method, its contained matchers are evaluated
+     * until at least a single one returns true or the provided matchers are exceeded. If an empty
+     * set is returned, which is the default behavior unless a custom implementation is provided,
+     * all previously matched executables will be considered compatible unless a later check
+     * mismatches.
      *
-     * This is the recommended method of matching engines which contain all of their game logic
-     * within DLLs.
+     * Unless at least one matcher within the returned set returns true on a passed process's
+     * metadata, the process in question is considered incompatible and marked as such within the
+     * application UI. If at least one matcher returns true, the process is considered compatible
+     * and attached to.
      */
     @Nonnull
-    default Set<String> getModuleNames() {
-        return Collections.emptySet();
-    }
-
-    /**
-     * Retrieves a set of known module sizes which are valid for use with this definition.
-     *
-     * If this method returns a set of at least one value, matching modules will be evaluated for
-     * their size against the values within the returned set.
-     *
-     * If none of the sizes match, the process in question is considered incompatible and will be
-     * marked as such in the application UI.
-     */
-    @Nonnull
-    default Set<Long> getModuleSizes() {
+    default Set<ModuleMatcher> getModuleMatchers() {
         return Collections.emptySet();
     }
 
@@ -168,6 +148,32 @@ public interface Game {
     @Nonnull
     static String getTitleLocalizationKey(@Nonnull Class<? extends Game> game) {
         return getBaseLocalizationKey(game) + ".title";
+    }
+
+    /**
+     * Checks whether a game matches the supplied executable metadata.
+     */
+    static boolean matchesExecutable(@Nonnull Game game, @Nonnull String name, @Nonnull Platform platform, @Nonnegative long size) {
+        for (ExecutableMatcher matcher : game.getExecutableMatchers()) {
+            if (matcher.matches(name, platform, size)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks whether a game matches the supplied module metadata.
+     */
+    static boolean matchesModule(@Nonnull Game game, @Nonnull String moduleName, @Nonnegative long size) {
+        for (ModuleMatcher matcher : game.getModuleMatchers()) {
+            if (matcher.matches(moduleName, size)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // TODO: Memory based compatibility

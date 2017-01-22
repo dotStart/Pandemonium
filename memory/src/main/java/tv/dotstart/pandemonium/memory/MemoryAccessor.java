@@ -246,6 +246,10 @@ public interface MemoryAccessor {
     /**
      * Reads a struct from this memory area.
      *
+     * @throws IllegalArgumentException          when the supplied struct implementation lacks a
+     *                                           pointer based constructor.
+     * @throws IllegalStateException             when constructing the struct causes an exception to
+     *                                           be thrown.
      * @throws MemoryAddressException            when the supplied address is invalid or
      *                                           inaccessible.
      * @throws MemoryAddressOutOfBoundsException when the supplied address is out of memory bounds.
@@ -254,18 +258,6 @@ public interface MemoryAccessor {
      */
     @Nonnull
     <S extends Structure> S readStruct(@Nonnegative long offset, @Nonnull Class<S> type) throws MemoryAddressException, MemoryReadException, MemoryStateException;
-
-    /**
-     * Reads a struct from this memory area.
-     *
-     * @throws MemoryAddressException            when the supplied address is invalid or
-     *                                           inaccessible.
-     * @throws MemoryAddressOutOfBoundsException when the supplied address is out of memory bounds.
-     * @throws MemoryReadException               when reading from memory fails.
-     * @throws MemoryStateException              when the state of this accessor is invalid.
-     */
-    @Nonnull
-    MemoryAccessor readStruct(@Nonnegative long offset, @Nonnull Structure structure) throws MemoryAddressException, MemoryReadException, MemoryStateException;
 
     /**
      * Writes a byte value into this memory area.

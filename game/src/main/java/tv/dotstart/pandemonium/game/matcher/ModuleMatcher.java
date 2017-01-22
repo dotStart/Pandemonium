@@ -16,6 +16,8 @@
  */
 package tv.dotstart.pandemonium.game.matcher;
 
+import org.controlsfx.tools.Platform;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
@@ -33,9 +35,9 @@ public interface ModuleMatcher {
      */
     @Nonnull
     static ModuleMatcher and(@Nonnull ModuleMatcher... matchers) {
-        return (name, size) -> {
+        return (name, platform, size) -> {
             for (ModuleMatcher matcher : matchers) {
-                if (!matcher.matches(name, size)) {
+                if (!matcher.matches(name, platform, size)) {
                     return false;
                 }
             }
@@ -49,9 +51,9 @@ public interface ModuleMatcher {
      */
     @Nonnull
     static ModuleMatcher or(@Nonnull ModuleMatcher... matchers) {
-        return (name, size) -> {
+        return (name, platform, size) -> {
             for (ModuleMatcher matcher : matchers) {
-                if (matcher.matches(name, size)) {
+                if (matcher.matches(name, platform, size)) {
                     return true;
                 }
             }
@@ -65,9 +67,9 @@ public interface ModuleMatcher {
      */
     @Nonnull
     static ModuleMatcher xor(@Nonnull ModuleMatcher matcherA, @Nonnull ModuleMatcher matcherB) {
-        return (name, size) -> {
-            boolean a = matcherA.matches(name, size);
-            boolean b = matcherB.matches(name, size);
+        return (name, platform, size) -> {
+            boolean a = matcherA.matches(name, platform, size);
+            boolean b = matcherB.matches(name, platform, size);
 
             return ((a || b) && a != b);
         };
@@ -78,12 +80,12 @@ public interface ModuleMatcher {
      */
     @Nonnull
     static ModuleMatcher not(@Nonnull ModuleMatcher matcher) {
-        return (name, size) -> !matcher.matches(name, size);
+        return (name, platform, size) -> !matcher.matches(name, platform, size);
     }
 
     /**
      * Checks whether the supplied module metadata matches the requirements for its parent game
      * definition.
      */
-    boolean matches(@Nonnull String name, @Nonnegative long size);
+    boolean matches(@Nonnull String name, @Nonnull Platform platform, @Nonnegative long size);
 }

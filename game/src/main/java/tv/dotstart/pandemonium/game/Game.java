@@ -166,9 +166,15 @@ public interface Game {
     /**
      * Checks whether a game matches the supplied module metadata.
      */
-    static boolean matchesModule(@Nonnull Game game, @Nonnull String moduleName, @Nonnegative long size) {
-        for (ModuleMatcher matcher : game.getModuleMatchers()) {
-            if (matcher.matches(moduleName, size)) {
+    static boolean matchesModule(@Nonnull Game game, @Nonnull String moduleName, @Nonnull Platform platform, @Nonnegative long size) {
+        Set<ModuleMatcher> matchers = game.getModuleMatchers();
+
+        if (matchers.size() == 0) {
+            return true;
+        }
+
+        for (ModuleMatcher matcher : matchers) {
+            if (matcher.matches(moduleName, platform, size)) {
                 return true;
             }
         }

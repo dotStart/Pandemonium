@@ -16,6 +16,8 @@
  */
 package tv.dotstart.pandemonium.memory.process;
 
+import java.util.Set;
+
 import javax.annotation.Nonnull;
 
 import tv.dotstart.pandemonium.memory.exception.process.ProcessStateException;
@@ -44,6 +46,14 @@ public interface Process {
      */
     @Nonnull
     ProcessModule getModule() throws ProcessStateException;
+
+    /**
+     * Retrieves a set of process modules within this process.
+     *
+     * @throws ProcessStateException when the process state prevents access to modules.
+     */
+    @Nonnull
+    Set<ProcessModule> getModules() throws ProcessStateException;
 
     /**
      * Retrieves the platform dependent name of this process.

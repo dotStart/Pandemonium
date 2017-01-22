@@ -45,7 +45,7 @@ public interface Process {
      * @throws ProcessStateException when the process state prevents access to modules.
      */
     @Nonnull
-    ProcessModule getModule() throws ProcessStateException;
+    ProcessModule getModule(@Nonnull String name) throws ProcessStateException;
 
     /**
      * Retrieves a set of process modules within this process.

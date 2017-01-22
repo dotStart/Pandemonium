@@ -32,6 +32,14 @@ import tv.dotstart.pandemonium.memory.module.ProcessModule;
 public interface Process {
 
     /**
+     * Retrieves the module which contains the executable resources.
+     *
+     * @throws ProcessStateException when the process state prevents access to modules.
+     */
+    @Nonnull
+    ProcessModule getExecutableModule() throws ProcessStateException;
+
+    /**
      * Retrieves a reference to this process's memory.
      *
      * @throws ProcessStateException when the process state prevents access to memory.

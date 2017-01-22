@@ -51,12 +51,6 @@ public interface MemoryAccessor {
     MemoryPointer createPointer(@Nonnegative long offset, @Nonnull long... offsets) throws MemoryAddressException, MemoryStateException;
 
     /**
-     * Retrieves the overall length of this memory area.
-     */
-    @Nonnegative
-    long getLength();
-
-    /**
      * Retrieves the process this memory area belongs to.
      */
     @Nonnull

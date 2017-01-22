@@ -29,6 +29,12 @@ import tv.dotstart.pandemonium.memory.MemoryAccessor;
 public interface ProcessModuleMemory extends MemoryAccessor {
 
     /**
+     * Retrieves the overall length of this memory area.
+     */
+    @Nonnegative
+    long getLength();
+
+    /**
      * Retrieves the parent process module.
      */
     @Nonnull

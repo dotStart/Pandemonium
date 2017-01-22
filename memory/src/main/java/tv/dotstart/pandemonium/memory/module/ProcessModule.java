@@ -27,6 +27,12 @@ import javax.annotation.Nonnull;
 public interface ProcessModule {
 
     /**
+     * Retrieves the address this module is located at.
+     */
+    @Nonnegative
+    long getBaseAddress();
+
+    /**
      * Retrieves the memory area occupied by this module.
      */
     @Nonnull

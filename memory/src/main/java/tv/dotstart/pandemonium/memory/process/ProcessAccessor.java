@@ -18,6 +18,7 @@ package tv.dotstart.pandemonium.memory.process;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
@@ -28,6 +29,12 @@ import javax.annotation.Nonnull;
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
 public interface ProcessAccessor {
+
+    /**
+     * Retrieves a set of processes which are currently active on this system.
+     */
+    @Nonnull
+    Set<Process> getActiveProcesses();
 
     /**
      * Attempts to find an active process in the operating system with the specified name or returns

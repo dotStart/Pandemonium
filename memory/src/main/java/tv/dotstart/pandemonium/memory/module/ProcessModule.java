@@ -16,6 +16,7 @@
  */
 package tv.dotstart.pandemonium.memory.module;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 /**
@@ -42,4 +43,10 @@ public interface ProcessModule {
      */
     @Nonnull
     String getName();
+
+    /**
+     * Retrieves the overall module size in bytes.
+     */
+    @Nonnegative
+    long getSize();
 }

@@ -108,7 +108,9 @@ public interface MemoryAccessor {
      * @throws MemoryStateException              when the state of this accessor is invalid.
      */
     @Nonnegative
-    short readUnsignedByte(@Nonnegative long offset) throws MemoryAddressException, MemoryReadException, MemoryStateException;
+    default short readUnsignedByte(@Nonnegative long offset) throws MemoryAddressException, MemoryReadException, MemoryStateException {
+        return (short) (this.readByte(offset) & 0xFF);
+    }
 
     /**
      * Reads a short value from this memory area.
@@ -132,7 +134,9 @@ public interface MemoryAccessor {
      * @throws MemoryStateException              when the state of this accessor is invalid.
      */
     @Nonnegative
-    int readUnsignedShort(@Nonnegative long offset) throws MemoryAddressException, MemoryReadException, MemoryStateException;
+    default int readUnsignedShort(@Nonnegative long offset) throws MemoryAddressException, MemoryReadException, MemoryStateException {
+        return this.readShort(offset) & 0xFFFF;
+    }
 
     /**
      * Reads an integer value from this memory area.
@@ -156,7 +160,9 @@ public interface MemoryAccessor {
      * @throws MemoryStateException              when the state of this accessor is invalid.
      */
     @Nonnegative
-    long readUnsignedInteger(@Nonnegative long offset) throws MemoryAddressException, MemoryReadException, MemoryStateException;
+    default long readUnsignedInteger(@Nonnegative long offset) throws MemoryAddressException, MemoryReadException, MemoryStateException {
+        return this.readInteger(offset) & 0xFFFFFFFFL;
+    }
 
     /**
      * Reads a float value from this memory area.
@@ -192,7 +198,12 @@ public interface MemoryAccessor {
      */
     @Nonnull
     @Nonnegative
-    BigInteger readUnsignedLong(@Nonnegative long offset) throws MemoryAddressException, MemoryReadException, MemoryStateException;
+    default BigInteger readUnsignedLong(@Nonnegative long offset) throws MemoryAddressException, MemoryReadException, MemoryStateException {
+        byte[] array = new byte[8];
+        this.readByteArray(offset, array);
+
+        return new BigInteger(1, array);
+    }
 
     /**
      * Reads a double value from this memory area.

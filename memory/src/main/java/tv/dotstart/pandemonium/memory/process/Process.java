@@ -50,7 +50,8 @@ public interface Process {
     /**
      * Retrieves a process module.
      *
-     * @throws ProcessStateException when the process state prevents access to modules.
+     * @throws IllegalArgumentException when no such module is present within this process.
+     * @throws ProcessStateException    when the process state prevents access to modules.
      */
     @Nonnull
     ProcessModule getModule(@Nonnull String name) throws ProcessStateException;

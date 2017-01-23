@@ -30,11 +30,11 @@ public interface Effect {
     /**
      * Applies an effect to an attached application process.
      */
-    void apply(@Nonnull Process process);
+    void apply();
 
     /**
      * Reverts an effect on an attached application process.
      */
-    default void revert(@Nonnull Process process) {
+    default void revert() {
     }
 }

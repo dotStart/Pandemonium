@@ -21,6 +21,8 @@ import org.controlsfx.tools.Platform;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import tv.dotstart.pandemonium.memory.process.Process;
+
 /**
  * Provides a factory for an effect which may be applied to the program instance or memory in order
  * to change the game behavior persistently or temporarily.
@@ -28,6 +30,12 @@ import javax.annotation.Nonnull;
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
 public interface EffectFactory {
+
+    /**
+     * Builds a new effect instance for the specified process.
+     */
+    @Nonnull
+    Effect build(@Nonnull Process process);
 
     /**
      * Retrieves the base localization key which is used to refer to the effects produced by this

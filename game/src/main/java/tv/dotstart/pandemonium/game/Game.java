@@ -30,7 +30,9 @@ import javax.annotation.Nonnull;
 import javafx.scene.image.Image;
 import tv.dotstart.pandemonium.effect.EffectFactory;
 import tv.dotstart.pandemonium.game.matcher.ExecutableMatcher;
+import tv.dotstart.pandemonium.game.matcher.MemoryMatcher;
 import tv.dotstart.pandemonium.game.matcher.ModuleMatcher;
+import tv.dotstart.pandemonium.memory.process.ProcessMemory;
 
 /**
  * Provides a game and the effects available to them as well as the information necessary to locate
@@ -118,6 +120,25 @@ public interface Game {
     UUID getId();
 
     /**
+     * Returns a set of memory matchers.
+     *
+     * If one or more matchers are returned by this method, its contained matchers are evaluated
+     * until at least a single one returns true or the provided matchers are exceeded. If an empty
+     * set is returned, which is the default behavior unless a custom implementation is provided,
+     * all previously matched executables will be considered compatible unless a later check
+     * mismatches.
+     *
+     * Unless at least one matcher within the returned set returns true on a passed process's
+     * memory, the process in question is considered incompatible and marked and such within the
+     * application UI. If at least one matcher returns true, the process is considered compatible
+     * and processing is enabled.
+     */
+    @Nonnull
+    default Set<MemoryMatcher> getMemoryMatchers() {
+        return Collections.emptySet();
+    }
+
+    /**
      * Returns a set of attached definition metadata which may be used to provide further
      * information to the user within the UI or decide upon compatibility with entered preset
      * strings.
@@ -180,6 +201,25 @@ public interface Game {
     }
 
     /**
+     * Checks whether a game matches the supplied process memory.
+     */
+    static boolean matchesMemory(@Nonnull Game game, @Nonnull String name, @Nonnull ProcessMemory memory) {
+        Set<MemoryMatcher> matchers = game.getMemoryMatchers();
+
+        if (matchers.isEmpty()) {
+            return true;
+        }
+
+        for (MemoryMatcher matcher : matchers) {
+            if (matcher.matches(name, memory)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Checks whether a game matches the supplied module metadata.
      */
     static boolean matchesModule(@Nonnull Game game, @Nonnull String moduleName, @Nonnull Platform platform, @Nonnegative long size) {
@@ -197,6 +237,4 @@ public interface Game {
 
         return false;
     }
-
-    // TODO: Memory based compatibility
 }

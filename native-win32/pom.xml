@@ -42,6 +42,10 @@
             <groupId>tv.dotstart.pandemonium</groupId>
             <artifactId>memory</artifactId>
         </dependency>
+        <dependency>
+            <groupId>tv.dotstart.pandemonium</groupId>
+            <artifactId>spring</artifactId>
+        </dependency>
 
         <!-- Native Access -->
         <dependency>

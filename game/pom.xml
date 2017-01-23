@@ -46,6 +46,10 @@
             <groupId>tv.dotstart.pandemonium</groupId>
             <artifactId>memory</artifactId>
         </dependency>
+        <dependency>
+            <groupId>tv.dotstart.pandemonium</groupId>
+            <artifactId>preset</artifactId>
+        </dependency>
 
         <!-- Utilities -->
         <dependency>

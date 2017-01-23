@@ -19,6 +19,7 @@ package tv.dotstart.pandemonium.memory.process;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
@@ -31,10 +32,10 @@ import javax.annotation.Nonnull;
 public interface ProcessAccessor {
 
     /**
-     * Retrieves a set of processes which are currently active on this system.
+     * Retrieves a set of matching processes which are currently active on the system.
      */
     @Nonnull
-    Set<? extends Process> getActiveProcesses();
+    Set<Process> getMatchingProcesses(@Nonnull Predicate<String> filter);
 
     /**
      * Attempts to find an active process in the operating system with the specified name or returns

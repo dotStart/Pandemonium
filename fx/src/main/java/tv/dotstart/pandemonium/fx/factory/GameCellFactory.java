@@ -17,10 +17,7 @@
 package tv.dotstart.pandemonium.fx.factory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
-
-import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
@@ -30,12 +27,13 @@ import javafx.util.Callback;
 import tv.dotstart.pandemonium.fx.control.game.GameCell;
 import tv.dotstart.pandemonium.fx.localization.ConfigurationAwareMessageSource;
 import tv.dotstart.pandemonium.game.Game;
+import tv.dotstart.pandemonium.game.GameConfiguration;
 
 /**
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
 @Component
-public class GameCellFactory implements Callback<ListView<Game>, ListCell<Game>> {
+public class GameCellFactory implements Callback<ListView<GameConfiguration>, ListCell<GameConfiguration>> {
     private final ConfigurationAwareMessageSource messageSource;
 
     @Autowired
@@ -47,10 +45,10 @@ public class GameCellFactory implements Callback<ListView<Game>, ListCell<Game>>
      * {@inheritDoc}
      */
     @Override
-    public ListCell<Game> call(ListView<Game> param) {
-        return new ListCell<Game>() {
+    public ListCell<GameConfiguration> call(ListView<GameConfiguration> param) {
+        return new ListCell<GameConfiguration>() {
             @Override
-            protected void updateItem(Game item, boolean empty) {
+            protected void updateItem(GameConfiguration item, boolean empty) {
                 super.updateItem(item, empty);
 
                 if (item == null || empty) {
@@ -59,8 +57,8 @@ public class GameCellFactory implements Callback<ListView<Game>, ListCell<Game>>
                 }
 
                 GameCell cell = new GameCell();
-                cell.setImage(Game.getIcon(item));
-                cell.setTitle(GameCellFactory.this.messageSource.getMessage(Game.getTitleLocalizationKey(item)));
+                cell.setImage(Game.getIcon(item.getGame()));
+                cell.setTitle(GameCellFactory.this.messageSource.getMessage(Game.getTitleLocalizationKey(item.getGame())));
 
                 this.setGraphic(cell);
             }

@@ -109,7 +109,7 @@ public class FX {
      */
     @Nonnull
     public PopOverBuilder createPopOver(@Nonnull Class<?> controllerType) throws IllegalArgumentException, IllegalStateException {
-        return new PopOverBuilder(this.loadResource(controllerType));
+        return new PopOverBuilder(this.loadResource(controllerType, "popover/", ""));
     }
 
     /**
@@ -121,7 +121,7 @@ public class FX {
      */
     @Nonnull
     public PopOverBuilder createPopOver(@Nonnull String resourceName, @Nullable ClassLoader loader) throws IllegalArgumentException, IllegalStateException {
-        return new PopOverBuilder(this.loadResource(resourceName, loader));
+        return new PopOverBuilder(this.loadResource("popover/" + resourceName, loader));
     }
 
     /**
@@ -195,13 +195,38 @@ public class FX {
      * @throws IllegalStateException    when the supplied resource fails loading.
      */
     @Nonnull
-    public <N extends Node> N loadResource(@Nonnull Class<?> controllerType) throws IllegalArgumentException, IllegalStateException {
+    public <N extends Node> N loadResource(@Nonnull Class<?> controllerType) {
+        return this.loadResource(controllerType, null, null);
+    }
+
+    /**
+     * Loads a certain FXML for a passed controller as declared through the respective window
+     * annotation.
+     *
+     * All passed controller types are required to be annotated with {@link ApplicationWindow} in
+     * order to indicate their respective FXML resource.
+     *
+     * @throws IllegalArgumentException when the supplied resource name does not actually exist
+     *                                  within the loader or the passed controller type is not
+     *                                  annotated using {@link ApplicationWindow}.
+     * @throws IllegalStateException    when the supplied resource fails loading.
+     */
+    @Nonnull
+    public <N extends Node> N loadResource(@Nonnull Class<?> controllerType, @Nullable String prefix, @Nullable String suffix) throws IllegalArgumentException, IllegalStateException {
         if (!controllerType.isAnnotationPresent(ApplicationWindow.class)) {
             throw new IllegalArgumentException("Supplied type is not marked using @ApplicationWindow");
         }
 
         ApplicationWindow window = AnnotationUtils.findAnnotation(controllerType, ApplicationWindow.class);
         String resourceName = window.resourceName();
+
+        if (prefix != null) {
+            resourceName = prefix + resourceName;
+        }
+
+        if (suffix != null) {
+            resourceName += suffix;
+        }
 
         if (resourceName.isEmpty()) {
             resourceName = controllerType.getSimpleName();

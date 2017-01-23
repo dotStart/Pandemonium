@@ -67,15 +67,25 @@ public interface Game {
     /**
      * Retrieves a set of known executable matchers.
      *
-     * This method is required to at least one matcher. If no matchers are provided, no process
-     * will
-     * be located for attachment and thus no action will be taken.
-     *
-     * The provided matchers will be applied one-by-one until at least one matcher returns true or
-     * the set is exceeded.
+     * When the returned set provides one or more matchers, the matchers are evaluated one by one
+     * until a matcher returns true or the set is exceeded. If the set contains elements but is
+     * exceeded without a single matcher returning true, the process in question will be considered
+     * incompatible and marked as such in the UI.
      */
     @Nonnull
-    Set<ExecutableMatcher> getExecutableMatchers();
+    default Set<ExecutableMatcher> getExecutableMatchers() {
+        return Collections.emptySet();
+    }
+
+    /**
+     * Retrieves a set of known executable names.
+     *
+     * At least one name must be contained within the returned set in order to achieve attachment
+     * when making use of this configuration. Any matching executable will be evaluated against
+     * further executable and module matchers in order to decide upon compatibility.
+     */
+    @Nonnull
+    Set<String> getExecutableNames();
 
     /**
      * Retrieves an icon URL which is used to reference this game definition within the application

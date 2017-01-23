@@ -62,7 +62,7 @@ public interface Process {
      * @throws ProcessStateException when the process state prevents access to modules.
      */
     @Nonnull
-    Set<ProcessModule> getModules() throws ProcessStateException;
+    Set<? extends ProcessModule> getModules() throws ProcessStateException;
 
     /**
      * Retrieves the platform dependent name of this process.

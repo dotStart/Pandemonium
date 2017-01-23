@@ -34,21 +34,21 @@ public interface ProcessAccessor {
      * Retrieves a set of processes which are currently active on this system.
      */
     @Nonnull
-    Set<Process> getActiveProcesses();
+    Set<? extends Process> getActiveProcesses();
 
     /**
      * Attempts to find an active process in the operating system with the specified name or returns
      * an empty optional if no such process exists.
      */
     @Nonnull
-    Optional<Process> findProcess(@Nonnull String processName);
+    Optional<? extends Process> findProcess(@Nonnull String processName);
 
     /**
      * Attempts to find an active process based on a list of process names or returns an empty
      * optional if no such process exists.
      */
     @Nonnull
-    default Optional<Process> findProcess(@Nonnull Collection<String> processNames) {
+    default Optional<? extends Process> findProcess(@Nonnull Collection<String> processNames) {
         return processNames.stream()
                 .map(this::findProcess)
                 .flatMap((o) -> o.isPresent() ? Stream.of(o.get()) : Stream.empty())

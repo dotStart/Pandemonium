@@ -164,7 +164,13 @@ public interface Game {
      * Checks whether a game matches the supplied executable metadata.
      */
     static boolean matchesExecutable(@Nonnull Game game, @Nonnull String name, @Nonnull Platform platform, @Nonnegative long size) {
-        for (ExecutableMatcher matcher : game.getExecutableMatchers()) {
+        Set<ExecutableMatcher> matchers = game.getExecutableMatchers();
+
+        if (matchers.isEmpty()) {
+            return true;
+        }
+
+        for (ExecutableMatcher matcher : matchers) {
             if (matcher.matches(name, platform, size)) {
                 return true;
             }
@@ -179,7 +185,7 @@ public interface Game {
     static boolean matchesModule(@Nonnull Game game, @Nonnull String moduleName, @Nonnull Platform platform, @Nonnegative long size) {
         Set<ModuleMatcher> matchers = game.getModuleMatchers();
 
-        if (matchers.size() == 0) {
+        if (matchers.isEmpty()) {
             return true;
         }
 

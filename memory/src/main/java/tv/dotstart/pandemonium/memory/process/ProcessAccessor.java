@@ -35,7 +35,7 @@ public interface ProcessAccessor {
      * Retrieves a set of matching processes which are currently active on the system.
      */
     @Nonnull
-    Set<Process> getMatchingProcesses(@Nonnull Predicate<String> filter);
+    Set<? extends Process> getMatchingProcesses(@Nonnull Predicate<String> filter);
 
     /**
      * Attempts to find an active process in the operating system with the specified name or returns

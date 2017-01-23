@@ -284,27 +284,6 @@ public interface MemoryPointer extends MemoryAccessor {
     <S extends Structure> S readStruct(@Nonnull Class<S> type) throws MemoryAddressException, MemoryReadException, MemoryStateException;
 
     /**
-     * Reads a struct from this pointer's address.
-     *
-     * @throws MemoryAddressException            when the supplied address is invalid or
-     *                                           inaccessible.
-     * @throws MemoryAddressOutOfBoundsException when the supplied address or array length is out
-     *                                           of
-     *                                           memory bounds.
-     * @throws MemoryReadException               when reading from memory fails.
-     * @throws MemoryStateException              when the state of this accessor is invalid.
-     */
-    @Nonnull
-    MemoryPointer readStruct(@Nonnull Structure structure) throws MemoryAddressException, MemoryReadException, MemoryStateException;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Nonnull
-    @Override
-    MemoryPointer readStruct(@Nonnegative long offset, @Nonnull Structure structure) throws MemoryAddressException, MemoryReadException, MemoryStateException;
-
-    /**
      * Writes a byte value to this pointer's address.
      *
      * @throws MemoryAddressException            when the supplied address is invalid or

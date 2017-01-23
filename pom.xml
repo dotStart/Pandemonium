@@ -311,6 +311,7 @@
         <module>memory</module>
         <module>module</module>
         <module>preset</module>
+        <module>spring</module>
         <module>ui</module>
         <module>web</module>
 

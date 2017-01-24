@@ -16,7 +16,6 @@
  */
 package tv.dotstart.pandemonium.memory.module;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import tv.dotstart.pandemonium.memory.MemoryAccessor;
@@ -27,12 +26,6 @@ import tv.dotstart.pandemonium.memory.MemoryAccessor;
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
 public interface ProcessModuleMemory extends MemoryAccessor {
-
-    /**
-     * Retrieves the overall length of this memory area.
-     */
-    @Nonnegative
-    long getLength();
 
     /**
      * Retrieves the parent process module.

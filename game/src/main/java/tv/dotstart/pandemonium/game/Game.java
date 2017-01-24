@@ -32,6 +32,7 @@ import tv.dotstart.pandemonium.effect.EffectFactory;
 import tv.dotstart.pandemonium.game.matcher.ExecutableMatcher;
 import tv.dotstart.pandemonium.game.matcher.MemoryMatcher;
 import tv.dotstart.pandemonium.game.matcher.ModuleMatcher;
+import tv.dotstart.pandemonium.memory.process.Process;
 import tv.dotstart.pandemonium.memory.process.ProcessMemory;
 
 /**
@@ -179,6 +180,21 @@ public interface Game {
     @Nonnull
     static String getTitleLocalizationKey(@Nonnull Class<? extends Game> game) {
         return getBaseLocalizationKey(game) + ".title";
+    }
+
+    /**
+     * Checks whether the game is currently paused.
+     *
+     * When paused effect application will be paused until the game reports otherwise to prevent
+     * players from sitting through an effect on a pause screen as well as to prevent effects from
+     * being applied or reverted during load screens (which may cause some problems in some specific
+     * games since memory areas may become unavailable).
+     *
+     * Note: Implementing types are responsible for taking loading screens into account when effects
+     * are reset during loading phases.
+     */
+    default boolean isPaused(@Nonnull Process process) {
+        return false;
     }
 
     /**

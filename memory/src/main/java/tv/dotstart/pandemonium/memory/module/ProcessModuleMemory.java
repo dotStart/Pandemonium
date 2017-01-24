@@ -39,10 +39,4 @@ public interface ProcessModuleMemory extends MemoryAccessor {
      */
     @Nonnull
     ProcessModule getModule();
-
-    /**
-     * Retrieves the offset of this module in memory.
-     */
-    @Nonnegative
-    long getOffset();
 }

@@ -37,14 +37,6 @@ import tv.dotstart.pandemonium.memory.exception.MemoryWriteException;
 public interface MemoryPointer extends MemoryAccessor {
 
     /**
-     * Retrieves the base address in memory this pointer is referring to.
-     *
-     * This address is relative to the virtual process memory and may thus exceed module bounds.
-     */
-    @Nonnegative
-    long getBaseAddress();
-
-    /**
      * Retrieves the parent memory accessor which backs all calls in this pointer.
      */
     @Nonnull

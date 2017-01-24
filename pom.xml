@@ -313,9 +313,9 @@
         <module>effect</module>
         <module>fx</module>
         <module>game</module>
-        <module>memory</module>
         <module>module</module>
         <module>preset</module>
+        <module>process</module>
         <module>spring</module>
         <module>ui</module>
         <module>web</module>

@@ -28,12 +28,12 @@
     </parent>
 
     <!-- Artifact Information -->
-    <artifactId>memory</artifactId>
+    <artifactId>process</artifactId>
     <packaging>jar</packaging>
 
     <!-- Artifact Metadata -->
-    <name>Pandemonium Memory</name>
-    <description>Provides a system independent abstraction for accessing game memory.</description>
+    <name>Pandemonium Process</name>
+    <description>Provides a system independent abstraction for accessing game processes.</description>
 
     <!-- Dependencies -->
     <dependencies>

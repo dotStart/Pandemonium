@@ -22,7 +22,7 @@ package tv.dotstart.pandemonium.process.exception;
  *
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
-public abstract class ProcessAttachmentException extends ProcessException {
+public class ProcessAttachmentException extends ProcessException {
 
     public ProcessAttachmentException() {
         super();

@@ -40,7 +40,7 @@
         <!-- Modules -->
         <dependency>
             <groupId>tv.dotstart.pandemonium</groupId>
-            <artifactId>memory</artifactId>
+            <artifactId>process</artifactId>
         </dependency>
         <dependency>
             <groupId>tv.dotstart.pandemonium</groupId>

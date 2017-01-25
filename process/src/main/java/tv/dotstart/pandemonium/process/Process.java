@@ -70,7 +70,7 @@ public interface Process {
      * games for reading and writing.
      */
     @Nonnull
-    Set<ProcessModule> getModules();
+    Set<? extends ProcessModule> getModules();
 
     /**
      * Retrieves a module with a matching native name or an empty optional if no such module is
@@ -80,7 +80,7 @@ public interface Process {
      * and "steam.dll" on Windows or "dxmd" and "steam.so" on Linux or Mac OS).
      */
     @Nonnull
-    Optional<ProcessModule> getModule(@Nonnull String moduleName);
+    Optional<? extends ProcessModule> getModule(@Nonnull String moduleName);
 
     /**
      * Retrieves a module with a matching native name or an empty optional if no such module is
@@ -94,7 +94,7 @@ public interface Process {
      * @see #getModule(String) for more information on this method.
      */
     @Nonnull
-    Optional<ProcessModule> getModule(@Nonnull Collection<String> moduleNames);
+    Optional<? extends ProcessModule> getModule(@Nonnull Collection<String> moduleNames);
 
     /**
      * Checks whether a module with a matching name is present within the process.

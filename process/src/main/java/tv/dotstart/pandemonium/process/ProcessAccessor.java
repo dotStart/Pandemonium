@@ -34,7 +34,7 @@ public interface ProcessAccessor {
      * Retrieves a set of active processes on this operating system.
      */
     @Nonnull
-    Set<Process> getActiveProcesses();
+    Set<? extends Process> getActiveProcesses();
 
     /**
      * Returns a running process on this operating system with the specified name or an empty
@@ -46,7 +46,7 @@ public interface ProcessAccessor {
      * @param name a process name.
      */
     @Nonnull
-    Optional<Process> getProcess(@Nonnull String name);
+    Optional<? extends Process> getProcess(@Nonnull String name);
 
     /**
      * Returns a running process on this operating system with the specified name or an empty
@@ -57,5 +57,5 @@ public interface ProcessAccessor {
      * their process names or may identify their processes differently.
      */
     @Nonnull
-    Optional<Process> getProcess(@Nonnull Collection<String> names);
+    Optional<? extends Process> getProcess(@Nonnull Collection<String> names);
 }

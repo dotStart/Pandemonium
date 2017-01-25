@@ -114,13 +114,35 @@ public interface ProcessMemoryPointer {
     }
 
     /**
+     * Reads a byte array from the address this pointer references.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryReadException  when reading from the process memory fails.
+     */
+    @Nonnull
+    default ProcessMemoryPointer readByteArray(@Nonnull byte[] array, @Nonnegative int arrayOffset, @Nonnegative int arrayLength) {
+        return this.readByteArray(0, array, arrayOffset, arrayLength);
+    }
+
+    /**
      * Reads a byte array from the address this pointer references plus the supplied offset.
      *
      * @throws ProcessMemoryStateException when the process or memory state prevents access.
      * @throws ProcessMemoryReadException  when reading from the process memory fails.
      */
     @Nonnull
-    ProcessMemoryPointer readByteArray(@Nonnegative long offset, @Nonnull byte[] array);
+    default ProcessMemoryPointer readByteArray(@Nonnegative long offset, @Nonnull byte[] array) {
+        return this.readByteArray(offset, array, 0, array.length);
+    }
+
+    /**
+     * Reads a byte array from the address this pointer references plus the supplied offset.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryReadException  when reading from the process memory fails.
+     */
+    @Nonnull
+    ProcessMemoryPointer readByteArray(@Nonnegative long offset, @Nonnull byte[] array, @Nonnegative int arrayOffset, @Nonnegative int arrayLength);
 
     /**
      * Reads a byte buffer from the address this pointer references.
@@ -134,13 +156,35 @@ public interface ProcessMemoryPointer {
     }
 
     /**
+     * Reads a byte buffer from the address this pointer reference.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryReadException  when reading from the process memory fails.
+     */
+    @Nonnull
+    default ProcessMemoryPointer readByteBuffer(@Nonnull ByteBuffer buffer, @Nonnegative int bufferOffset, @Nonnegative int bufferLength) {
+        return this.readByteBuffer(0, buffer, bufferOffset, bufferLength);
+    }
+
+    /**
      * Reads a byte buffer from the address this pointer references plus the supplied offset.
      *
      * @throws ProcessMemoryStateException when the process or memory state prevents access.
      * @throws ProcessMemoryReadException  when reading from the process memory fails.
      */
     @Nonnull
-    ProcessMemoryPointer readByteBuffer(@Nonnegative long offset, @Nonnull ByteBuffer buffer);
+    default ProcessMemoryPointer readByteBuffer(@Nonnegative long offset, @Nonnull ByteBuffer buffer) {
+        return this.readByteBuffer(offset, buffer, 0, buffer.limit() - buffer.position());
+    }
+
+    /**
+     * Reads a byte buffer from the address this pointer references plus the supplied offset.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryReadException  when reading from the process memory fails.
+     */
+    @Nonnull
+    ProcessMemoryPointer readByteBuffer(@Nonnegative long offset, @Nonnull ByteBuffer buffer, @Nonnegative int bufferOffset, @Nonnegative int bufferLength);
 
     /**
      * Reads an integer from the address this pointer references.
@@ -376,6 +420,90 @@ public interface ProcessMemoryPointer {
      */
     @Nonnull
     ProcessMemoryPointer writeByte(@Nonnegative long offset, short value);
+
+    /**
+     * Writes a byte array to the address this pointer references.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryWriteException when writing to the process memory fails.
+     */
+    @Nonnull
+    default ProcessMemoryPointer writeByteArray(@Nonnull byte[] array) {
+        return this.writeByteArray(0, array);
+    }
+
+    /**
+     * Writes a byte array to the address this pointer references.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryWriteException when writing to the process memory fails.
+     */
+    @Nonnull
+    default ProcessMemoryPointer writeByteArray(@Nonnull byte[] array, @Nonnegative int arrayOffset, @Nonnegative int arrayLength) {
+        return this.writeByteArray(0, array, arrayOffset, arrayLength);
+    }
+
+    /**
+     * Writes a byte array to the address this pointer references plus the supplied offset.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryWriteException when writing to the process memory fails.
+     */
+    @Nonnull
+    default ProcessMemoryPointer writeByteArray(@Nonnegative long offset, @Nonnull byte[] array) {
+        return this.writeByteArray(offset, array, 0, array.length);
+    }
+
+    /**
+     * Writes a byte array to the address this pointer references plus the supplied offset.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryWriteException when writing to the process memory fails.
+     */
+    @Nonnull
+    ProcessMemoryPointer writeByteArray(@Nonnegative long offset, @Nonnull byte[] array, @Nonnegative int arrayOffset, @Nonnegative int arrayLength);
+
+    /**
+     * Writes a byte buffer to the address this pointer references.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryWriteException when writing to the process memory fails.
+     */
+    @Nonnull
+    default ProcessMemoryPointer writeByteBuffer(@Nonnull ByteBuffer buffer) {
+        return this.writeByteBuffer(0, buffer);
+    }
+
+    /**
+     * Writes a byte buffer to the address this pointer references.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryWriteException when writing to the process memory fails.
+     */
+    @Nonnull
+    default ProcessMemoryPointer writeByteBuffer(@Nonnull ByteBuffer buffer, @Nonnegative int bufferOffset, @Nonnegative int bufferLength) {
+        return this.writeByteBuffer(0, buffer, bufferOffset, bufferLength);
+    }
+
+    /**
+     * Writes a byte buffer to the address this pointer references plus the supplied offset.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryWriteException when writing to the process memory fails.
+     */
+    @Nonnull
+    default ProcessMemoryPointer writeByteBuffer(@Nonnegative long offset, @Nonnull ByteBuffer buffer) {
+        return this.writeByteBuffer(offset, buffer, 0, buffer.remaining());
+    }
+
+    /**
+     * Writes a byte buffer to the address this pointer references plus the supplied offset.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryWriteException when writing to the process memory fails.
+     */
+    @Nonnull
+    ProcessMemoryPointer writeByteBuffer(@Nonnegative long offset, @Nonnull ByteBuffer buffer, @Nonnegative int bufferOffset, @Nonnegative int bufferLength);
 
     /**
      * Writes an integer to the address this pointer references.

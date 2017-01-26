@@ -16,24 +16,17 @@
  */
 package tv.dotstart.pandemonium.game;
 
-import org.controlsfx.tools.Platform;
-
 import java.net.URL;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import javafx.scene.image.Image;
 import tv.dotstart.pandemonium.effect.EffectFactory;
-import tv.dotstart.pandemonium.game.matcher.ExecutableMatcher;
-import tv.dotstart.pandemonium.game.matcher.MemoryMatcher;
-import tv.dotstart.pandemonium.game.matcher.ModuleMatcher;
-import tv.dotstart.pandemonium.memory.process.Process;
-import tv.dotstart.pandemonium.memory.process.ProcessMemory;
+import tv.dotstart.pandemonium.game.matcher.MatcherChain;
 
 /**
  * Provides a game and the effects available to them as well as the information necessary to locate
@@ -66,19 +59,6 @@ public interface Game {
      */
     @Nonnull
     Set<EffectFactory> getEffectFactories();
-
-    /**
-     * Retrieves a set of known executable matchers.
-     *
-     * When the returned set provides one or more matchers, the matchers are evaluated one by one
-     * until a matcher returns true or the set is exceeded. If the set contains elements but is
-     * exceeded without a single matcher returning true, the process in question will be considered
-     * incompatible and marked as such in the UI.
-     */
-    @Nonnull
-    default Set<ExecutableMatcher> getExecutableMatchers() {
-        return Collections.emptySet();
-    }
 
     /**
      * Retrieves a set of known executable names.
@@ -121,22 +101,16 @@ public interface Game {
     UUID getId();
 
     /**
-     * Returns a set of memory matchers.
+     * Retrieves a chain of matchers which indicate whether a process is compatible with this game
+     * definition or not.
      *
-     * If one or more matchers are returned by this method, its contained matchers are evaluated
-     * until at least a single one returns true or the provided matchers are exceeded. If an empty
-     * set is returned, which is the default behavior unless a custom implementation is provided,
-     * all previously matched executables will be considered compatible unless a later check
-     * mismatches.
-     *
-     * Unless at least one matcher within the returned set returns true on a passed process's
-     * memory, the process in question is considered incompatible and marked and such within the
-     * application UI. If at least one matcher returns true, the process is considered compatible
-     * and processing is enabled.
+     * Matcher chains evaluate whether process names, sizes, module names sizes and memory
+     * properties are within expected bounds and may be chained together using standard binary
+     * operations in order to provide more complex matching schemes.
      */
     @Nonnull
-    default Set<MemoryMatcher> getMemoryMatchers() {
-        return Collections.emptySet();
+    default MatcherChain getMatcherChain() {
+        return MatcherChain.TRUE;
     }
 
     /**
@@ -146,25 +120,6 @@ public interface Game {
      */
     @Nonnull
     Metadata getMetadata();
-
-    /**
-     * Retrieves a set of module matchers.
-     *
-     * If one or more matchers are returned by this method, its contained matchers are evaluated
-     * until at least a single one returns true or the provided matchers are exceeded. If an empty
-     * set is returned, which is the default behavior unless a custom implementation is provided,
-     * all previously matched executables will be considered compatible unless a later check
-     * mismatches.
-     *
-     * Unless at least one matcher within the returned set returns true on a passed process's
-     * metadata, the process in question is considered incompatible and marked as such within the
-     * application UI. If at least one matcher returns true, the process is considered compatible
-     * and attached to.
-     */
-    @Nonnull
-    default Set<ModuleMatcher> getModuleMatchers() {
-        return Collections.emptySet();
-    }
 
     /**
      * Retrieves the title localization key.
@@ -194,63 +149,6 @@ public interface Game {
      * are reset during loading phases.
      */
     default boolean isPaused(@Nonnull Process process) {
-        return false;
-    }
-
-    /**
-     * Checks whether a game matches the supplied executable metadata.
-     */
-    static boolean matchesExecutable(@Nonnull Game game, @Nonnull String name, @Nonnull Platform platform, @Nonnegative long size) {
-        Set<ExecutableMatcher> matchers = game.getExecutableMatchers();
-
-        if (matchers.isEmpty()) {
-            return true;
-        }
-
-        for (ExecutableMatcher matcher : matchers) {
-            if (matcher.matches(name, platform, size)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Checks whether a game matches the supplied process memory.
-     */
-    static boolean matchesMemory(@Nonnull Game game, @Nonnull String name, @Nonnull ProcessMemory memory) {
-        Set<MemoryMatcher> matchers = game.getMemoryMatchers();
-
-        if (matchers.isEmpty()) {
-            return true;
-        }
-
-        for (MemoryMatcher matcher : matchers) {
-            if (matcher.matches(name, memory)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Checks whether a game matches the supplied module metadata.
-     */
-    static boolean matchesModule(@Nonnull Game game, @Nonnull String moduleName, @Nonnull Platform platform, @Nonnegative long size) {
-        Set<ModuleMatcher> matchers = game.getModuleMatchers();
-
-        if (matchers.isEmpty()) {
-            return true;
-        }
-
-        for (ModuleMatcher matcher : matchers) {
-            if (matcher.matches(moduleName, platform, size)) {
-                return true;
-            }
-        }
-
         return false;
     }
 }

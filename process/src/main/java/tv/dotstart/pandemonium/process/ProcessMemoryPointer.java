@@ -493,7 +493,7 @@ public interface ProcessMemoryPointer {
      */
     @Nonnull
     default ProcessMemoryPointer writeByteBuffer(@Nonnegative long offset, @Nonnull ByteBuffer buffer) {
-        return this.writeByteBuffer(offset, buffer, 0, buffer.remaining());
+        return this.writeByteBuffer(offset, buffer, buffer.position(), buffer.remaining());
     }
 
     /**

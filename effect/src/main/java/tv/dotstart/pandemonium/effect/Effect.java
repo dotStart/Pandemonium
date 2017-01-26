@@ -16,10 +16,6 @@
  */
 package tv.dotstart.pandemonium.effect;
 
-import javax.annotation.Nonnull;
-
-import tv.dotstart.pandemonium.memory.process.Process;
-
 /**
  * Provides the logic required to create a certain effect in a process and revert it back.
  *

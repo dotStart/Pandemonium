@@ -73,16 +73,14 @@ public interface ProcessMemoryPointer {
     /**
      * Creates a pointer relative to this pointer's position.
      *
-     * The created pointer is a deep pointer regardless of whether this pointer is deep or not as
-     * it combines the base address and offsets of this pointer with the offsets provided to this
-     * method. The resulting pointer will share its base address with this pointer and consist of at
-     * least one offset.
+     * When one or more offsets are supplied, a deep pointer is created using the new offset.
      *
+     * @param offset  an offset to resolve the new base pointer from.
      * @param offsets an array of offsets to resolve nested pointers from.
      * @see #resolve() to convert pointers constructed by this method into direct pointers.
      */
     @Nonnull
-    ProcessMemoryPointer pointer(@Nonnegative long... offsets);
+    ProcessMemoryPointer pointer(@Nonnegative long offset, @Nonnegative long... offsets);
 
     /**
      * Reads a single byte from the address this pointer references.

@@ -21,6 +21,8 @@ import org.controlsfx.tools.Platform;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import tv.dotstart.pandemonium.process.Process;
+
 /**
  * Provides a factory for an effect which may be applied to the program instance or memory in order
  * to change the game behavior persistently or temporarily.

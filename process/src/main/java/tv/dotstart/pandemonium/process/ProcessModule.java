@@ -21,7 +21,7 @@ import java.nio.file.Path;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import tv.dotstart.pandemonium.process.exception.ProcessStateException;
+import tv.dotstart.pandemonium.process.exception.memory.ProcessMemoryStateException;
 
 /**
  * Represents a module within a game process such as the executable itself or
@@ -56,8 +56,8 @@ public interface ProcessModule {
      *
      * @param offset  an offset from the module start address.
      * @param offsets an array of further offsets to apply when resolving deep pointers.
-     * @throws ProcessStateException when the process state prevents access to memory.
+     * @throws ProcessMemoryStateException when the process state prevents access to memory.
      */
     @Nonnull
-    ProcessMemoryPointer pointer(@Nonnegative long offset, @Nonnull @Nonnegative long... offsets) throws ProcessStateException;
+    ProcessMemoryPointer pointer(@Nonnegative long offset, @Nonnull @Nonnegative long... offsets) throws ProcessMemoryStateException;
 }

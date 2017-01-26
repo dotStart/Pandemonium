@@ -18,6 +18,7 @@ package tv.dotstart.pandemonium.process;
 
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -26,6 +27,7 @@ import javax.annotation.Nonnull;
 
 import tv.dotstart.pandemonium.process.exception.ProcessAttachmentException;
 import tv.dotstart.pandemonium.process.exception.ProcessStateException;
+import tv.dotstart.pandemonium.process.exception.memory.ProcessMemoryStateException;
 
 /**
  * A representation for a process on this operating system.
@@ -162,11 +164,12 @@ public interface Process {
      * @param moduleName a platform dependent module name.
      * @param offset     an offset from the module start address.
      * @param offsets    an array of further offsets to apply when resolving deep pointers.
-     * @throws ProcessStateException when accessing process memory is prevented by its current
-     *                               state.
+     * @throws NoSuchElementException      when no such module exists.
+     * @throws ProcessMemoryStateException when accessing process memory is prevented by its
+     *                                     current state.
      */
     @Nonnull
-    ProcessMemoryPointer pointer(@Nonnull String moduleName, @Nonnegative long offset, @Nonnull @Nonnegative long... offsets) throws ProcessStateException;
+    ProcessMemoryPointer pointer(@Nonnull String moduleName, @Nonnegative long offset, @Nonnull @Nonnegative long... offsets) throws ProcessMemoryStateException;
 
     /**
      * Creates a new pointer to an address in a process module.
@@ -178,10 +181,11 @@ public interface Process {
      * @param moduleNames a collection of known module names.
      * @param offset      an offset from the module start address.
      * @param offsets     an array of further offsets to apply when resolving deep pointers.
-     * @throws ProcessStateException when accessing process memory is prevented by its current
-     *                               state.
+     * @throws NoSuchElementException      when no such module exists.
+     * @throws ProcessMemoryStateException when accessing process memory is prevented by its
+     *                                     current state.
      * @see #pointer(String, long, long...) for more information on this method.
      */
     @Nonnull
-    ProcessMemoryPointer pointer(@Nonnull Collection<String> moduleNames, @Nonnegative long offset, @Nonnull @Nonnegative long... offsets) throws ProcessStateException;
+    ProcessMemoryPointer pointer(@Nonnull Collection<String> moduleNames, @Nonnegative long offset, @Nonnull @Nonnegative long... offsets) throws ProcessMemoryStateException;
 }

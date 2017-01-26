@@ -28,6 +28,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import tv.dotstart.pandemonium.process.Process;
 import tv.dotstart.pandemonium.process.exception.ProcessStateException;
 import tv.dotstart.pandemonium.process.exception.memory.ProcessMemoryReadException;
+import tv.dotstart.pandemonium.process.exception.memory.ProcessMemoryStateException;
 
 /**
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
@@ -64,7 +65,7 @@ class MemoryImpl implements MatcherChain.Memory {
                     }
 
                     return true;
-                } catch (ProcessStateException | ProcessMemoryReadException ex) {
+                } catch (ProcessMemoryStateException | ProcessMemoryReadException ex) {
                     return false;
                 }
             }

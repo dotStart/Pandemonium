@@ -17,7 +17,6 @@
 package tv.dotstart.pandemonium.game;
 
 import java.net.URL;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -27,6 +26,7 @@ import javax.annotation.Nonnull;
 import javafx.scene.image.Image;
 import tv.dotstart.pandemonium.effect.EffectFactory;
 import tv.dotstart.pandemonium.game.matcher.MatcherChain;
+import tv.dotstart.pandemonium.process.Process;
 
 /**
  * Provides a game and the effects available to them as well as the information necessary to locate
@@ -35,6 +35,18 @@ import tv.dotstart.pandemonium.game.matcher.MatcherChain;
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
 public interface Game {
+
+    /**
+     * Creates a new state mapper for the supplied process.
+     *
+     * This interface is used to offer game independent access to the respective process state
+     * when evaluating RNG resets as well as effect timeline pauses.
+     */
+    @Nonnull
+    default GameStateMapper createStateMapper(@Nonnull Process process) {
+        return new GameStateMapper() {
+        };
+    }
 
     /**
      * Retrieves the base localization key used when referring to this game within the application

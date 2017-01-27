@@ -117,6 +117,20 @@ public interface EffectFactory {
     }
 
     /**
+     * Checks whether this effect is compatible with the process and its current state.
+     *
+     * When this check returns false, the factory will not be invoked and another effect may be
+     * generated (depending on the current game preset).
+     *
+     * This check is especially useful when a game changes certain states further down the road. For
+     * instance, this check may be used to apply effects which change weapon information when a
+     * weapon is in the player's inventory only.
+     */
+    default boolean isCompatibleWith(@Nonnull Process process) {
+        return true;
+    }
+
+    /**
      * Checks whether this effect is compatible with the supplied effect.
      *
      * When this check returns false, this factory will not be invoked and another effect may be

@@ -185,6 +185,42 @@ public interface ProcessMemoryPointer {
     ProcessMemoryPointer readByteBuffer(@Nonnegative long offset, @Nonnull ByteBuffer buffer, @Nonnegative int bufferOffset, @Nonnegative int bufferLength);
 
     /**
+     * Reads a double from the address this pointer references.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryReadException  when reading from the process memory fails.
+     */
+    default double readDouble() {
+        return this.readDouble(0);
+    }
+
+    /**
+     * Reads a double from this address this pointer references plus the supplied offset.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryReadException  when reading from the process memory fails.
+     */
+    double readDouble(@Nonnegative long offset);
+
+    /**
+     * Reads a float from the address this pointer references.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryReadException  when reading from the process memory fails.
+     */
+    default float readFloat() {
+        return this.readFloat(0);
+    }
+
+    /**
+     * Reads a float from the address this pointer references plus the supplied offset.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryReadException  when reading from the process memory fails.
+     */
+    float readFloat(@Nonnegative long offset);
+
+    /**
      * Reads an integer from the address this pointer references.
      *
      * @throws ProcessMemoryStateException when the process or memory state prevents access.
@@ -502,6 +538,46 @@ public interface ProcessMemoryPointer {
      */
     @Nonnull
     ProcessMemoryPointer writeByteBuffer(@Nonnegative long offset, @Nonnull ByteBuffer buffer, @Nonnegative int bufferOffset, @Nonnegative int bufferLength);
+
+    /**
+     * Writes a double to the address this pointer references.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryWriteException when writing to the process memory fails.
+     */
+    @Nonnull
+    default ProcessMemoryPointer writeDouble(double value) {
+        return this.writeDouble(0, value);
+    }
+
+    /**
+     * Writes a double to the address this pointer references plus the supplied offset.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryWriteException when writing to the process memory fails.
+     */
+    @Nonnull
+    ProcessMemoryPointer writeDouble(@Nonnegative long offset, double value);
+
+    /**
+     * Writes a float to the address this pointer references.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryWriteException when writing to the process memory fails.
+     */
+    @Nonnull
+    default ProcessMemoryPointer writeFloat(float value) {
+        return this.writeFloat(0, value);
+    }
+
+    /**
+     * Writes a float to the address this pointer references plus the supplied offset.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     * @throws ProcessMemoryWriteException when writing to the process memory fails.
+     */
+    @Nonnull
+    ProcessMemoryPointer writeFloat(@Nonnegative long offset, float value);
 
     /**
      * Writes an integer to the address this pointer references.

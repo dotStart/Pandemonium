@@ -222,7 +222,7 @@ public class PresetBuffer {
      */
     public int readInteger() {
         int value = (int) this.readUnsignedInteger();
-        return (value << 31) ^ (value >>> 1);
+        return (value >>> 1) ^ (value << 31);
     }
 
     /**
@@ -270,7 +270,7 @@ public class PresetBuffer {
      */
     public long readLong() {
         long value = this.readUnsignedLong();
-        return (value << 63) ^ (value >>> 1);
+        return (value >>> 1) ^ (value << 63);
     }
 
     /**
@@ -321,8 +321,8 @@ public class PresetBuffer {
         long value = 0;
 
         for (int i = 0; i < length; ++i) {
-            byte bundle = this.readByte();
-            value ^= (bundle & 0x7F) << (i * 7);
+            byte bundle = this.buffer.readByte();
+            value |= (bundle & 0x7FL) << (i * 7);
 
             if ((bundle & 0x80) != 0x80) {
                 return value;
@@ -501,7 +501,7 @@ public class PresetBuffer {
      */
     @Nonnull
     public PresetBuffer writeInteger(int value) {
-        return this.writeUnsignedInteger((value >>> 31) ^ (value << 1));
+        return this.writeUnsignedInteger((value << 1) ^ (value >>> 31));
     }
 
     /**
@@ -564,7 +564,7 @@ public class PresetBuffer {
      */
     @Nonnull
     public PresetBuffer writeLong(long value) {
-        return this.writeUnsignedLong((value >>> 63) ^ (value << 1));
+        return this.writeUnsignedLong((value << 1) ^ (value >>> 63));
     }
 
     /**
@@ -599,10 +599,10 @@ public class PresetBuffer {
             value >>>= 7;
 
             if (value != 0) {
-                bundle ^= 0x80;
+                bundle |= 0x80;
             }
 
-            this.writeByte(bundle);
+            this.buffer.writeByte(bundle);
         } while (value != 0);
 
         return this;

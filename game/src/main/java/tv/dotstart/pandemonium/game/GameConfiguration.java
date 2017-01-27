@@ -67,6 +67,8 @@ public class GameConfiguration {
                         .collect(Collectors.toList())
         );
 
+        this.effectConfigurations.forEach((c) -> this.presetBuilder.addEffect(c.getEffectFactory().getEffectId()));
+
         // hook event listeners and bindings in order to re-generate the binding when necessary
         this.preset.bind(Bindings.createObjectBinding(this::updatePreset, this.seed, this.effectChance, this.combinationChance, this.delayLow, this.delayHigh, this.durationLow, this.durationHigh, this.effectConfigurations, this.presetBuilder.getEffectIds()));
 

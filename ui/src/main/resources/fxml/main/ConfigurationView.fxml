@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2017 Johannes Donath <me@dotstart.tv>
+  ~ and other copyright owners as documented in the project's IP log.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.GridPane?>
+<?import org.controlsfx.control.RangeSlider?>
+<?import javafx.scene.layout.Pane?>
+<?import tv.dotstart.pandemonium.fx.control.IconButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="tv.dotstart.pandemonium.ui.window.main.ConfigurationView" styleClass="configuration-box">
+    <ListView fx:id="gameListView" styleClass="game-list" prefWidth="300" />
+
+    <StackPane styleClass="configuration" HBox.hgrow="ALWAYS">
+        <Label fx:id="placeholderLabel" styleClass="placeholder" text="%main.configuration.select" />
+
+        <VBox fx:id="gameConfigurationBox" styleClass="game-configuration">
+            <HBox styleClass="header">
+                <ImageView fx:id="gameIconImageView" styleClass="icon" />
+                <Label fx:id="gameNameLabel" text="Game Name" styleClass="name" />
+                <IconButton fx:id="gameEndorsementButton" onAction="#onRequestEndorsementInformation" fontName="FontAwesome" glyphName="CHECK_CIRCLE" styleClass="endorsed" />
+
+                <Pane HBox.hgrow="ALWAYS" />
+
+                <IconButton fx:id="startButton" onAction="#onRequestStart" fontName="FontAwesome" glyphName="POWER_OFF" text="%main.configuration.start" disable="true" />
+            </HBox>
+
+            <GridPane styleClass="properties">
+                <Label text="%main.configuration.seed" styleClass="name" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                <TextField fx:id="seedTextField" styleClass="control" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                        <tooltip>
+                            <Tooltip text="%main.configuration.seed.tooltip" />
+                        </tooltip>
+                </TextField>
+                <Button text="%main.configuration.seed.generate" onAction="#onRequestSeed" GridPane.rowIndex="0" GridPane.columnIndex="2">
+                        <tooltip>
+                            <Tooltip text="%main.configuration.seed.generate.tooltip" />
+                        </tooltip>
+                </Button>
+
+                <Label text="%main.configuration.effectChance" styleClass="name" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                <Slider fx:id="effectChanceSlider" styleClass="control" min="1" value="50" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                        <tooltip>
+                            <Tooltip text="%main.configuration.effectChance.tooltip" />
+                        </tooltip>
+                </Slider>
+                <Label fx:id="effectChanceLabel" styleClass="value" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+
+                <Label text="%main.configuration.combinationChance" styleClass="name" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                <Slider fx:id="combinationChanceSlider" styleClass="control" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                        <tooltip>
+                            <Tooltip text="%main.configuration.combinationChance.tooltip" />
+                        </tooltip>
+                </Slider>
+                <Label fx:id="combinationChanceLabel" styleClass="value" GridPane.rowIndex="2" GridPane.columnIndex="2" />
+
+                <Label text="%main.configuration.delay" styleClass="name" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                <RangeSlider fx:id="delayRangeSlider" styleClass="control" min="0" max="300" highValue="300" minorTickCount="300" majorTickUnit="30" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                        <tooltip>
+                            <Tooltip text="%main.configuration.delay.tooltip" />
+                        </tooltip>
+                </RangeSlider>
+                <Label fx:id="delayLabel" styleClass="value" GridPane.rowIndex="3" GridPane.columnIndex="2" />
+
+                <Label text="%main.configuration.duration" styleClass="name" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                <RangeSlider fx:id="durationRangeSlider" styleClass="control" min="30" max="300" highValue="300" minorTickCount="270" majorTickUnit="30" GridPane.rowIndex="4" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                        <tooltip>
+                            <Tooltip text="%main.configuration.duration.tooltip" />
+                        </tooltip>
+                </RangeSlider>
+                <Label fx:id="durationLabel" styleClass="value" GridPane.rowIndex="4" GridPane.columnIndex="2" />
+            </GridPane>
+
+            <ListView fx:id="effectListView" styleClass="effect-list" VBox.vgrow="ALWAYS">
+                <placeholder>
+                    <Label text="%main.configuration.effects.placeholder" />
+                </placeholder>
+            </ListView>
+        </VBox>
+    </StackPane>
+</HBox>

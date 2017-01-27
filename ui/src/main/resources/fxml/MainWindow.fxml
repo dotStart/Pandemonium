@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2017 Johannes Donath <me@dotstart.tv>
+  ~ and other copyright owners as documented in the project's IP log.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import tv.dotstart.pandemonium.fx.control.IconButton?>
+<?import tv.dotstart.pandemonium.fx.control.Window?>
+<Window xmlns:fx="http://javafx.com/fxml" fx:id="root" fx:controller="tv.dotstart.pandemonium.ui.window.MainWindow" minWidth="950" minHeight="400" resize="false">
+    <stylesheets>
+        <URL value="@/css/MainWindow.css"/>
+    </stylesheets>
+
+    <buttons>
+        <HBox styleClass="preset">
+            <TextField fx:id="presetTextField" promptText="%main.configuration.preset">
+                    <tooltip>
+                        <Tooltip text="%main.configuration.preset.tooltip" />
+                    </tooltip>
+            </TextField>
+            <IconButton fx:id="presetLoadIconButton" onAction="#onRequestPresetLoad" fontName="FontAwesome" glyphName="REFRESH">
+                <tooltip>
+                    <Tooltip text="%main.configuration.preset.load"/>
+                </tooltip>
+            </IconButton>
+            <IconButton fx:id="presetCopyIconButton" onAction="#onRequestPresetCopy" fontName="FontAwesome" glyphName="CLIPBOARD">
+                <tooltip>
+                    <Tooltip text="%main.configuration.preset.copy"/>
+                </tooltip>
+            </IconButton>
+        </HBox>
+
+        <Button fx:id="settingsButton" onAction="#onRequestSettings"/>
+    </buttons>
+
+    <StackPane>
+        <fx:include fx:id="configurationView" source="/fxml/main/ConfigurationView.fxml"/>
+        <fx:include fx:id="activityView" source="/fxml/main/ActivityView.fxml"/>
+    </StackPane>
+</Window>

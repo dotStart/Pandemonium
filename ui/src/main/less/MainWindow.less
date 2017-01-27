@@ -1,0 +1,258 @@
+/*
+ * Copyright 2017 Johannes Donath <me@dotstart.tv>
+ * and other copyright owners as documented in the project's IP log.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+@color-blue: #6c71c4;
+@color-green: #73994d;
+@color-red: #D25252;
+@color-orange: #cb4b16;
+
+.title-bar .preset {
+  -fx-background-color: #212121;
+  -fx-background-radius: 3px;
+  -fx-spacing: 0;
+
+  .text-field {
+    -fx-padding: 4px;
+
+    -fx-border-color: #2B2B2B;
+    -fx-border-width: 0 2px 0 0;
+    -fx-background-color: transparent;
+  }
+}
+
+.configuration-box {
+  -fx-spacing: 15px;
+  -fx-padding: 0 15px 0 0;
+
+  .placeholder {
+    -fx-font-size: 1.5em;
+    -fx-text-fill: rgba(255, 255, 255, 0.25);
+  }
+
+  .game-list {
+    -fx-border-color: #282828;
+    -fx-border-width: 0 1px 0 0;
+  }
+
+  .game-configuration {
+    -fx-padding: 10px 0;
+    -fx-spacing: 15px;
+
+    .header,
+    .properties {
+      -fx-border-style: solid;
+      -fx-border-width: 0 0 2px 0;
+      -fx-border-color: #212121;
+      -fx-padding: 0 0 20px 0;
+    }
+
+    .header {
+      -fx-spacing: 10px;
+      -fx-alignment: center-left;
+      -fx-padding: 0 0 10px 0;
+
+      .icon {
+        -fx-pref-width: 32px;
+        -fx-pref-height: 32px;
+      }
+
+      .name,
+      .endorsed {
+        -fx-font-size: 24px;
+      }
+
+      .endorsed {
+        -fx-padding: 0;
+        -fx-cursor: hand;
+        -fx-border-width: 0;
+        -fx-background-color: transparent;
+
+        &:hover .glyph-font {
+          -fx-text-fill: -fx-accent;
+        }
+      }
+    }
+
+    .properties {
+      -fx-hgap: 15px;
+      -fx-vgap: 5px;
+    }
+
+    .effect-list {
+      -fx-background-color: transparent;
+
+      .list-cell {
+        -fx-background-color: transparent;
+        -fx-padding: 0;
+
+        .effect {
+          -fx-border-width: 1px 0 0 0;
+          -fx-border-color: #212121;
+
+          &.first,
+          &:empty {
+            -fx-border-width: 0;
+          }
+        }
+
+        .label {
+          -fx-text-fill: white;
+        }
+      }
+    }
+  }
+}
+
+.activity-box {
+  -fx-background-color: -fx-base;
+
+  .content {
+    -fx-alignment: center;
+    -fx-max-width: 350px;
+
+    .header {
+      -fx-alignment: center;
+      -fx-border-color: #212121;
+      -fx-border-width: 0 0 2px 0;
+
+      -fx-spacing: 10px;
+      -fx-padding: 0 0 10px 0;
+
+      .icon {
+        -fx-min-width: 32px;
+        -fx-max-width: 32px;
+        -fx-min-height: 32px;
+        -fx-max-height: 32px;
+      }
+
+      .name {
+        -fx-font-size: 2em;
+      }
+    }
+
+    .effect-view {
+      -fx-background-color: transparent;
+
+      .placeholder .label {
+        -fx-font-size: 1.5em;
+        -fx-text-fill: rgba(255, 255, 255, 0.25);
+      }
+
+      .effect {
+        -fx-alignment: center-left;
+        -fx-background-color: #212121;
+
+        &,
+        .progress {
+          -fx-background-radius: 5px;
+        }
+
+        .metadata {
+          -fx-padding: 4px 8px;
+          -fx-spacing: 2px;
+          -fx-alignment: center-left;
+
+          -fx-background-color: transparent;
+
+          .title,
+          .description {
+            -fx-text-fill: white;
+          }
+
+          .title {
+            -fx-font-weight: bold;
+          }
+        }
+
+        .progress {
+          -fx-background-color: @color-red;
+        }
+
+        &:waiting .progress {
+          -fx-background-color: @color-orange;
+        }
+
+        &:reverted .progress {
+          -fx-background-color: @color-blue;
+        }
+      }
+    }
+  }
+
+  .footer {
+    -fx-padding: 12px 10px;
+
+    &,
+    .inner,
+    .left,
+    .right {
+      -fx-border-width: 0;
+      -fx-alignment: center-left;
+    }
+
+    .game-state {
+      -fx-padding: 0 0 0 5px;
+
+      &:terminated {
+        -fx-text-fill: @color-red;
+      }
+
+      &:paused,
+      &:title-screen {
+        -fx-text-fill: @color-blue;
+      }
+
+      &:playing {
+        -fx-text-fill: @color-green;
+      }
+    }
+
+    .stop {
+      -fx-background-color: transparent;
+      -fx-cursor: hand;
+
+      &,
+      .glyph-font {
+        -fx-text-fill: rgba(255, 255, 255, 0.25);
+      }
+
+      &:hover {
+        &,
+        .glyph-font {
+          -fx-text-fill: white;
+        }
+      }
+    }
+  }
+}
+
+.popover .endorsement {
+
+  .header {
+    -fx-alignment: center;
+    -fx-padding: 10px 0;
+
+    -fx-border-width: 0;
+
+    .title {
+      -fx-font-size: 20px;
+    }
+
+    .glyph-font {
+      -fx-text-fill: white !important;
+    }
+  }
+}

@@ -71,6 +71,33 @@ public interface ProcessMemoryPointer {
     }
 
     /**
+     * Checks whether the address this pointer references is accessible at this time.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     */
+    default boolean isReadable(@Nonnegative int length) {
+        return this.isReadable(0, length);
+    }
+
+    /**
+     * Checks whether the address this pointer references plus the supplied offset is accessible at
+     * this time.
+     *
+     * @throws ProcessMemoryStateException when the process or memory state prevents access.
+     */
+    default boolean isReadable(@Nonnegative long offset, @Nonnegative int length) {
+        try {
+            for (int i = 0; i < length; ++i) {
+                this.readByte(offset + i);
+            }
+
+            return true;
+        } catch (ProcessMemoryReadException ex) {
+            return false;
+        }
+    }
+
+    /**
      * Creates a pointer relative to this pointer's position.
      *
      * When one or more offsets are supplied, a deep pointer is created using the new offset.

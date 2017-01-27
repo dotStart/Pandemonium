@@ -30,7 +30,7 @@ import javafx.beans.property.SimpleBooleanProperty;
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
 public class EffectConfiguration {
-    private final BooleanProperty active = new SimpleBooleanProperty();
+    private final BooleanProperty active = new SimpleBooleanProperty(true);
     private final EffectFactory effectFactory;
 
     public EffectConfiguration(@Nonnull EffectFactory effectFactory) {

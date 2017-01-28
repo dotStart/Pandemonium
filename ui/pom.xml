@@ -132,6 +132,7 @@
                             <classpathPrefix>../lib/</classpathPrefix>
                             <classpathLayoutType>repository</classpathLayoutType>
 
+                            <mainClass>tv.dotstart.pandemonium.ui.Pandemonium</mainClass>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
                     </archive>

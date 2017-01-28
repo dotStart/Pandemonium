@@ -42,6 +42,8 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
+import javafx.stage.StageStyle;
+import tv.dotstart.pandemonium.fx.FX;
 import tv.dotstart.pandemonium.fx.annotation.ApplicationWindow;
 import tv.dotstart.pandemonium.fx.control.IconButton;
 import tv.dotstart.pandemonium.fx.glyph.EmbeddedFontAwesome;
@@ -64,6 +66,7 @@ public class MainWindow implements Initializable {
     private final BooleanProperty activeProperty = new SimpleBooleanProperty();
     private final BooleanProperty generatedPreset = new SimpleBooleanProperty();
 
+    private final FX fx;
     private final ConfigurationAwareMessageSource messageSource;
 
     // <editor-fold desc="FXML">
@@ -90,7 +93,8 @@ public class MainWindow implements Initializable {
     private boolean skipButtonUpdate;
 
     @Autowired
-    public MainWindow(@Nonnull ConfigurationAwareMessageSource messageSource) {
+    public MainWindow(@Nonnull FX fx, @Nonnull ConfigurationAwareMessageSource messageSource) {
+        this.fx = fx;
         this.messageSource = messageSource;
     }
 
@@ -183,7 +187,10 @@ public class MainWindow implements Initializable {
      */
     @FXML
     private void onRequestSettings(@Nonnull ActionEvent event) {
-        // TODO
+        this.fx.createStage(SettingsWindow.class)
+                .setModality(Modality.APPLICATION_MODAL)
+                .setTitle(this.messageSource.getMessage("settings.title"))
+                .buildAndShow();
     }
 
     /**

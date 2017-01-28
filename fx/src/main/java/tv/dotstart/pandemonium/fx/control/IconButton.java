@@ -23,6 +23,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
@@ -33,10 +35,11 @@ import javafx.scene.control.Button;
  */
 public class IconButton extends Button {
     private final StringProperty fontName = new SimpleStringProperty();
+    private final IntegerProperty fontSize = new SimpleIntegerProperty(14);
     private final StringProperty glyphName = new SimpleStringProperty();
 
     public IconButton() {
-        this.graphicProperty().bind(Bindings.createObjectBinding(this::updateGraphic, this.fontName, this.glyphName));
+        this.graphicProperty().bind(Bindings.createObjectBinding(this::updateGraphic, this.fontName, this.fontSize, this.glyphName));
     }
 
     /**
@@ -57,7 +60,7 @@ public class IconButton extends Button {
             return null;
         }
 
-        return font.create(this.glyphName.get());
+        return font.create(this.glyphName.get()).size(this.fontSize.get());
     }
 
     // <editor-fold desc="Getters & Setters">
@@ -74,10 +77,24 @@ public class IconButton extends Button {
         this.fontName.set(fontName);
     }
 
+    public int getFontSize() {
+        return this.fontSize.get();
+    }
+
+    @Nonnull
+    public IntegerProperty fontSizeProperty() {
+        return this.fontSize;
+    }
+
+    public void setFontSize(int fontSize) {
+        this.fontSize.set(fontSize);
+    }
+
     public String getGlyphName() {
         return this.glyphName.get();
     }
 
+    @Nonnull
     public StringProperty glyphNameProperty() {
         return this.glyphName;
     }

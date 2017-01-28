@@ -271,32 +271,31 @@
                         </archive>
                     </configuration>
                 </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-shade-plugin</artifactId>
-                    <version>2.4.3</version>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.10</version>
 
                     <executions>
                         <execution>
-                            <phase>package</phase>
+                            <id>copy-dependencies</id>
+
                             <goals>
-                                <goal>shade</goal>
+                                <goal>copy-dependencies</goal>
                             </goals>
                         </execution>
                     </executions>
 
                     <configuration>
-                        <minimizeJar>true</minimizeJar>
+                        <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        <copyPom>true</copyPom>
+                        <type>java-source,jar</type>
+                        <useRepositoryLayout>true</useRepositoryLayout>
 
-                        <filters>
-                            <filter>
-                                <artifact>${project.groupId}:*</artifact>
-
-                                <includes>
-                                    <include>**</include>
-                                </includes>
-                            </filter>
-                        </filters>
+                        <overWriteIfNewer>true</overWriteIfNewer>
+                        <overWriteReleases>false</overWriteReleases>
+                        <overWriteSnapshots>true</overWriteSnapshots>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -315,8 +314,8 @@
 
                             <configuration>
                                 <headerType>gui</headerType>
-                                <outfile>${project.build.directory}/${project.build.finalName}.exe</outfile>
-                                <jar>${project.build.directory}/${project.build.finalName}.jar</jar>
+                                <outfile>${project.build.directory}/bin/${project.build.finalName}.exe</outfile>
+                                <jar>${project.build.finalName}.jar</jar>
                                 <icon>${project.basedir}/src/main/resources/icon/application16.ico</icon>
                                 <dontWrapJar>true</dontWrapJar>
                                 <errTitle>Pandemonium</errTitle>

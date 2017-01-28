@@ -118,10 +118,28 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+
+                <configuration>
+                    <outputDirectory>${project.build.directory}/bin</outputDirectory>
+
+                    <archive>
+                        <addMavenDescriptor>true</addMavenDescriptor>
+                        <compress>true</compress>
+                        <index>true</index>
+
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>../lib/</classpathPrefix>
+                            <classpathLayoutType>repository</classpathLayoutType>
+
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
+                <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>com.akathist.maven.plugins.launch4j</groupId>

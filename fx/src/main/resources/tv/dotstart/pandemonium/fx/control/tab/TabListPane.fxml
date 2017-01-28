@@ -16,10 +16,11 @@
   ~ limitations under the License.
   -->
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <fx:root xmlns:fx="http://javafx.com/fxml" type="tv.dotstart.pandemonium.fx.control.tab.TabListPane" styleClass="tab-list-pane">
     <children>
         <ListView fx:id="tabList" styleClass="tab-list" />
-        <StackPane fx:id="contentPane" styleClass="tab-content" />
+        <StackPane fx:id="contentPane" styleClass="tab-content" HBox.hgrow="ALWAYS" />
     </children>
 </fx:root>

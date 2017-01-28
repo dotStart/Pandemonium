@@ -344,6 +344,7 @@
     </build>
 
     <modules>
+        <module>configuration</module>
         <module>effect</module>
         <module>fx</module>
         <module>game</module>

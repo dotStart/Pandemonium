@@ -35,7 +35,7 @@
                         <Tooltip text="%main.configuration.preset.tooltip" />
                     </tooltip>
             </TextField>
-            <IconButton fx:id="presetLoadIconButton" onAction="#onRequestPresetLoad" fontName="FontAwesome" glyphName="REFRESH">
+            <IconButton fx:id="presetLoadIconButton" onAction="#onRequestPresetLoad" fontName="FontAwesome" glyphName="PLAY">
                 <tooltip>
                     <Tooltip text="%main.configuration.preset.load"/>
                 </tooltip>

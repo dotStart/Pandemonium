@@ -318,8 +318,8 @@
                                 <outfile>${project.build.directory}/${project.build.finalName}.exe</outfile>
                                 <jar>${project.build.directory}/${project.build.finalName}.jar</jar>
                                 <icon>${project.basedir}/src/main/resources/icon/application16.ico</icon>
-                                <dontWrapJar>false</dontWrapJar>
-                                <errTitle>Chaos Manager</errTitle>
+                                <dontWrapJar>true</dontWrapJar>
+                                <errTitle>Pandemonium</errTitle>
 
                                 <jre>
                                     <minVersion>1.8.0</minVersion>

@@ -80,6 +80,8 @@ public class SettingsWindow implements Initializable {
     private final HostServices hostServices;
     private final Collection<Game> games;
 
+    private boolean localeWarningDisplayed;
+    private boolean webWarningDisplayed;
     private int eeCounter;
 
     // <editor-fold desc="FXML">
@@ -203,6 +205,10 @@ public class SettingsWindow implements Initializable {
         this.globalLocaleComboBox.setItems(FXCollections.observableArrayList(ApplicationConfiguration.getSupportedLocales()));
 
         this.globalLocaleComboBox.valueProperty().addListener(observable -> {
+            if (this.localeWarningDisplayed) {
+                return;
+            }
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle(this.messageSource.getMessage("alert.locale.restart.title"));
             alert.setHeaderText(this.messageSource.getMessage("alert.locale.restart.header"));
@@ -210,6 +216,8 @@ public class SettingsWindow implements Initializable {
 
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.show();
+
+            this.localeWarningDisplayed = true;
         });
 
         this.eeToggleSwitch.selectedProperty().addListener(observable -> {
@@ -301,6 +309,22 @@ public class SettingsWindow implements Initializable {
         this.webAddressTextField.disableProperty().bind(this.applicationConfiguration.webEnabledProperty().not());
         this.webPortTextField.disableProperty().bind(this.applicationConfiguration.webEnabledProperty().not());
         this.webAddressEffectTextField.textProperty().bind(Bindings.createStringBinding(this::updateWebAddressEffectTextField, this.webAddressTextField.textProperty(), this.webPortTextField.textProperty()));
+
+        this.webEnabledToggleSwitch.selectedProperty().addListener(observable -> {
+            if (this.webWarningDisplayed) {
+                return;
+            }
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(this.messageSource.getMessage("alert.web.restart.title"));
+            alert.setHeaderText(this.messageSource.getMessage("alert.web.restart.header"));
+            alert.setContentText(this.messageSource.getMessage("alert.web.restart.description"));
+
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.show();
+
+            this.webWarningDisplayed = true;
+        });
 
         // About
         Package p = this.getClass().getPackage();

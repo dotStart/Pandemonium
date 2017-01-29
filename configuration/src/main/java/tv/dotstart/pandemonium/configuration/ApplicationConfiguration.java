@@ -123,6 +123,7 @@ public class ApplicationConfiguration {
         this.audioPlaySchedule.addListener(this::onPropertyInvalidation);
         this.audioPlayApply.addListener(this::onPropertyInvalidation);
         this.audioPlayRevert.addListener(this::onPropertyInvalidation);
+        this.audioVolume.addListener(this::onPropertyInvalidation);
         this.audioClipSchedule.addListener(this::onPropertyInvalidation);
         this.audioClipApply.addListener(this::onPropertyInvalidation);
         this.audioClipRevert.addListener(this::onPropertyInvalidation);

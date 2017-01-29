@@ -21,6 +21,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Random;
 
 import javax.annotation.Nonnull;
@@ -36,7 +40,11 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import tv.dotstart.pandemonium.configuration.ApplicationConfiguration;
 import tv.dotstart.pandemonium.effect.Effect;
 import tv.dotstart.pandemonium.effect.EffectConfiguration;
 import tv.dotstart.pandemonium.effect.EffectFactory;
@@ -68,13 +76,15 @@ public class EffectManager {
             new KeyFrame(Duration.millis(500), this::checkState)
     );
 
+    private final ApplicationConfiguration applicationConfiguration;
     private final ConfigurationAwareMessageSource messageSource;
 
     private Random random;
     private GameStateMapper stateMapper;
 
     @Autowired
-    public EffectManager(@Nonnull ConfigurationAwareMessageSource messageSource) {
+    public EffectManager(@Nonnull ApplicationConfiguration applicationConfiguration, @Nonnull ConfigurationAwareMessageSource messageSource) {
+        this.applicationConfiguration = applicationConfiguration;
         this.messageSource = messageSource;
 
         this.spawnTimeline.setCycleCount(Animation.INDEFINITE);
@@ -191,6 +201,64 @@ public class EffectManager {
     }
 
     /**
+     * Plays an audio clip.
+     */
+    private void playAudioClip(@Nullable String clipPath) {
+        if (clipPath == null) {
+            logger.warn("No audio clip specified");
+            return;
+        }
+
+        Path path = Paths.get(clipPath);
+
+        if (Files.notExists(path)) {
+            logger.warn("Audio clip file \"%s\" does no longer exist", path);
+            return;
+        }
+
+        if (!Files.isReadable(path)) {
+            logger.warn("Audio clip file \"%s\" is not readable", path);
+        }
+
+        this.playAudioClip(path);
+    }
+
+    /**
+     * Plays an audio clip.
+     */
+    private void playAudioClip(@Nonnull Path clipPath) {
+        try {
+            String uri = clipPath.toUri().toURL().toExternalForm();
+
+            logger.info("Playing schedule audio clip: %s", uri);
+            Media clip = new Media(uri);
+            MediaPlayer player = new MediaPlayer(clip);
+
+            player.play();
+        } catch (MalformedURLException ex) {
+            logger.error("Audio clip path \"" + clipPath.toString() + "\" is invalid: " + ex.getMessage(), ex);
+        } catch (MediaException ex) {
+            switch (ex.getType()) {
+                case MEDIA_CORRUPTED:
+                    logger.error("Failed to play clip: Media is corrupted: %s", ex.getMessage());
+                    break;
+                case MEDIA_INACCESSIBLE:
+                    logger.error("Failed to play clip: Media is inaccessible: %s", ex.getMessage());
+                    break;
+                case MEDIA_UNAVAILABLE:
+                    logger.error("Failed to play clip: Media is unavailable: %s", ex.getMessage());
+                    break;
+                case MEDIA_UNSUPPORTED:
+                    logger.error("Failed to play clip: Media is of an unsupported type: %s", ex.getMessage());
+                    break;
+                default:
+                    logger.error("Failed to play clip: Unknown error: " + ex.getMessage());
+                    break;
+            }
+        }
+    }
+
+    /**
      * Evaluates the chances of spawning an effect.
      */
     private void spawnEffect(@Nonnull ActionEvent event) {
@@ -280,6 +348,26 @@ public class EffectManager {
 
                 this.effectList.add(scheduledEffect);
                 scheduledEffect.play();
+
+                if (this.applicationConfiguration.isAudioPlaySchedule()) {
+                    logger.info("Playing schedule audio clip");
+                    this.playAudioClip(this.applicationConfiguration.getAudioClipSchedule());
+                }
+
+                scheduledEffect.setOnApply(() -> {
+                    if (this.applicationConfiguration.isAudioPlayApply()) {
+                        logger.info("Playing apply audio clip");
+                        this.playAudioClip(this.applicationConfiguration.getAudioClipApply());
+                    }
+                });
+
+                scheduledEffect.setOnRevert(() -> {
+                    if (this.applicationConfiguration.isAudioPlayRevert()) {
+                        logger.info("Playing revert audio clip");
+                        this.playAudioClip(this.applicationConfiguration.getAudioClipRevert());
+                    }
+                });
+
                 break;
             }
 

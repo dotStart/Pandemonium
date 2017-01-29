@@ -46,7 +46,7 @@ public class Pandemonium extends Application {
     private final AnnotationConfigApplicationContext context;
 
     public Pandemonium() {
-        this.context = new AnnotationConfigApplicationContext("tv.dotstart.pandemonium");
+        this.context = new AnnotationConfigApplicationContext("tv.dotstart.pandemonium", "addon");
     }
 
     /**
@@ -54,6 +54,9 @@ public class Pandemonium extends Application {
      */
     @Override
     public void start(@Nonnull Stage primaryStage) throws Exception {
+        this.context.getBeanFactory().registerSingleton("application", this);
+        this.context.getBeanFactory().registerSingleton("hostServices", this.getHostServices());
+
         String extraPackage = System.getProperty("pandemonium.scan.package");
 
         if (extraPackage != null) {

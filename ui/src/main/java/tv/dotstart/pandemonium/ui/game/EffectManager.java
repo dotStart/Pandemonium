@@ -25,6 +25,8 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nonnull;
@@ -69,6 +71,7 @@ public class EffectManager {
     private final ObjectProperty<Process> process = new SimpleObjectProperty<>();
     private final ObjectProperty<GameStateLabel.State> state = new SimpleObjectProperty<>();
     private final ObservableList<ScheduledEffect> effectList = FXCollections.observableArrayList();
+    private final List<MediaPlayer> mediaPlayers = new ArrayList<>();
     private final Timeline spawnTimeline = new Timeline(
             new KeyFrame(Duration.seconds(20), this::spawnEffect)
     );
@@ -233,9 +236,12 @@ public class EffectManager {
             logger.info("Playing schedule audio clip: %s", uri);
             Media clip = new Media(uri);
 
-            MediaPlayer player = new MediaPlayer(clip);
+            final MediaPlayer player = new MediaPlayer(clip);
+            player.setOnEndOfMedia(() -> this.mediaPlayers.remove(player));
             player.setVolume(this.applicationConfiguration.getAudioVolume() / 100d);
             player.play();
+
+            this.mediaPlayers.add(player);
         } catch (MalformedURLException ex) {
             logger.error("Audio clip path \"" + clipPath.toString() + "\" is invalid: " + ex.getMessage(), ex);
         } catch (MediaException ex) {

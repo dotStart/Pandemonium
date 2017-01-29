@@ -19,7 +19,10 @@ package tv.dotstart.pandemonium.ui;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.controlsfx.tools.Platform;
+import org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigRegistry;
 
 import java.nio.file.Paths;
 
@@ -30,8 +33,11 @@ import javafx.application.ConditionalFeature;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import tv.dotstart.pandemonium.configuration.ApplicationConfiguration;
 import tv.dotstart.pandemonium.fx.FX;
 import tv.dotstart.pandemonium.fx.FXExceptionHandler;
+import tv.dotstart.pandemonium.ui.configuration.helper.DefaultApplicationConfiguration;
+import tv.dotstart.pandemonium.ui.configuration.helper.WebEnabledApplicationConfiguration;
 import tv.dotstart.pandemonium.ui.window.MainWindow;
 
 /**
@@ -43,10 +49,23 @@ import tv.dotstart.pandemonium.ui.window.MainWindow;
 public class Pandemonium extends Application {
     private static final Logger logger = LogManager.getFormatterLogger(Pandemonium.class);
 
-    private final AnnotationConfigApplicationContext context;
+    private final ConfigurableApplicationContext context;
 
     public Pandemonium() {
-        this.context = new AnnotationConfigApplicationContext("tv.dotstart.pandemonium", "addon");
+        // load the previous application configuration or generate a new configuration to decide
+        // whether it is necessary to construct a web context or a regular context to skip the web
+        // server initialization if necessary
+        ApplicationConfiguration configuration = new ApplicationConfiguration();
+
+        if (configuration.isWebEnabled()) {
+            this.context = new AnnotationConfigEmbeddedWebApplicationContext(WebEnabledApplicationConfiguration.class);
+        } else {
+            this.context = new AnnotationConfigApplicationContext(DefaultApplicationConfiguration.class);
+        }
+
+        // register the application instance with the application context now since it is not
+        // actually managed by spring
+        this.context.getBeanFactory().registerSingleton("application", this);
     }
 
     /**
@@ -54,19 +73,25 @@ public class Pandemonium extends Application {
      */
     @Override
     public void start(@Nonnull Stage primaryStage) throws Exception {
-        this.context.getBeanFactory().registerSingleton("application", this);
+        // register host services with the application context now since it may not be available
+        // if we attempt to access it during construction
         this.context.getBeanFactory().registerSingleton("hostServices", this.getHostServices());
 
+        // scan a single extra package provided through a system property in order to simplify addon
+        // development in IDEs
         String extraPackage = System.getProperty("pandemonium.scan.package");
 
         if (extraPackage != null) {
-            this.context.scan(extraPackage);
+            ((AnnotationConfigRegistry) this.context).scan(extraPackage);
         }
 
+        // register a global exception handler with the current thread as well as all other threads
+        // through the default exception handler to notify users of application bugs
         FXExceptionHandler exceptionHandler = this.context.getBean(FXExceptionHandler.class);
         Thread.currentThread().setUncaughtExceptionHandler(exceptionHandler);
         Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
 
+        // bootstrap the main application scene into our primary stage
         primaryStage.initStyle((javafx.application.Platform.isSupported(ConditionalFeature.TRANSPARENT_WINDOW) ? StageStyle.TRANSPARENT : StageStyle.UNDECORATED));
         primaryStage.getIcons().add(new Image(Pandemonium.class.getResource("/icon/application256.png").toExternalForm()));
         primaryStage.setTitle("Pandemonium");

@@ -19,11 +19,13 @@ package tv.dotstart.pandemonium.module;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -76,6 +78,12 @@ public class ModuleManager {
      */
     @PostConstruct
     private void configureContext() {
+        if (this.context instanceof AnnotationConfigEmbeddedWebApplicationContext) {
+            AnnotationConfigEmbeddedWebApplicationContext context = (AnnotationConfigEmbeddedWebApplicationContext) this.context;
+            context.setClassLoader(new DelegatingClassLoader(this.getClass().getClassLoader()));
+            return;
+        }
+
         AnnotationConfigApplicationContext applicationContext = (AnnotationConfigApplicationContext) this.context;
         applicationContext.setClassLoader(new DelegatingClassLoader(this.getClass().getClassLoader()));
 

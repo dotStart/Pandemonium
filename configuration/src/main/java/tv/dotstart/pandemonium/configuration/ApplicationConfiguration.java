@@ -38,7 +38,6 @@ import java.util.Locale;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
-import javax.annotation.PostConstruct;
 
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
@@ -133,12 +132,14 @@ public class ApplicationConfiguration {
         this.webPort.addListener(this::onPropertyInvalidation);
 
         this.preset.addListener(this::onPropertyInvalidation);
+
+        // load the previous configuration (if available)
+        this.loadPrevious();
     }
 
     /**
      * Loads the previously stored configuration.
      */
-    @PostConstruct
     private void loadPrevious() {
         Path configPath = getConfigurationPath();
 

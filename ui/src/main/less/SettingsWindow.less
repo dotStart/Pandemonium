@@ -1,0 +1,141 @@
+/*
+ * Copyright 2017 Johannes Donath <me@dotstart.tv>
+ * and other copyright owners as documented in the project's IP log.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+.tab-list-pane {
+  .tab-list {
+    -fx-min-width: 120px;
+    -fx-max-width: 120px;
+  }
+}
+
+.page {
+  -fx-spacing: 14px;
+}
+
+.header {
+  -fx-alignment: center-left;
+  -fx-padding: 0 0 4px 0;
+  -fx-border-width: 0 0 2px;
+  -fx-border-color: #212121;
+
+  .label {
+    -fx-font-size: 1.5em;
+  }
+
+  .toggle-switch {
+    -fx-padding: 10px 0 0;
+  }
+}
+
+.addon-list,
+.addon-detail {
+  -fx-background-color: #313335 !important;
+}
+
+.addon-detail {
+  -fx-min-height: 125px;
+  -fx-padding: 6px 12px;
+}
+
+.about .properties {
+  -fx-border-width: 2px 0 0;
+  -fx-border-color: #212121;
+  -fx-padding: 7px 0 0;
+}
+
+.properties {
+  .name {
+    -fx-min-width: 100px;
+    -fx-row-valignment: top;
+    -fx-column-halignment: left;
+  }
+
+  .combined {
+    .first {
+      -fx-background-radius: 5px 0 0 5px;
+    }
+
+    .second {
+      -fx-border-color: #2B2B2B;
+      -fx-border-width: 0 0 0 2px;
+
+      -fx-background-radius: 0 5px 5px 0;
+    }
+  }
+
+  .control {
+    -fx-spacing: 8px;
+  }
+
+  .description {
+    -fx-wrap-text: true;
+    -fx-text-fill: rgba(255, 255, 255, 0.5);
+  }
+
+  .file-chooser {
+    .browse,
+    .clear {
+      -fx-background-color: #212121;
+      -fx-border-color: #2B2B2B;
+      -fx-border-width: 0 0 0 2px;
+
+      &:hover {
+        -fx-text-fill: white;
+        -fx-background-color: #141414;
+      }
+    }
+
+    .browse {
+      -fx-background-radius: 0;
+    }
+
+    .clear {
+      -fx-background-radius: 0 3px 3px 0;
+    }
+  }
+
+  .toggle-switch {
+    -fx-padding: 2px 0 0;
+  }
+}
+
+.footer {
+  -fx-alignment: center-left;
+  -fx-padding: 0 0 10px;
+
+  .copyright,
+  .help {
+    -fx-background-color: transparent;
+
+    &,
+    .glyph-font {
+      -fx-text-fill: rgba(255, 255, 255, 0.2);
+    }
+
+    &:hover,
+    &:hover .glyph-font {
+      -fx-text-fill: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  .copyright {
+    -fx-cursor: hand;
+
+    .glyph-font {
+      -fx-padding: 0 5px 0 0;
+    }
+  }
+}

@@ -33,6 +33,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import tv.dotstart.pandemonium.configuration.ApplicationConfiguration;
 import tv.dotstart.pandemonium.fx.localization.ConfigurationAwareMessageSource;
 
 /**
@@ -45,10 +46,11 @@ public class ModuleMessageSource extends AbstractMessageSource implements Config
     private final LinkedList<MessageSource> childSources = new LinkedList<>();
     private final ReadWriteLock childSourceLock = new ReentrantReadWriteLock();
 
-    private final Locale locale = Locale.ENGLISH; // TODO: Poll from configuration
+    private final Locale locale;
 
     @Autowired
-    public ModuleMessageSource(@Nonnull Collection<MessageSource> messageSources) {
+    public ModuleMessageSource(@Nonnull ApplicationConfiguration configuration, @Nonnull Collection<MessageSource> messageSources) {
+        this.locale = configuration.getApplicationLocale();
         this.childSources.addAll(messageSources);
     }
 

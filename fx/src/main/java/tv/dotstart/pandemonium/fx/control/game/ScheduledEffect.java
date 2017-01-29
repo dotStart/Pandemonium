@@ -76,6 +76,8 @@ public class ScheduledEffect extends StackPane implements Initializable {
             ScheduledEffect.this.pseudoClassStateChanged(PSEUDO_CLASS_REVERTED, this.get() == State.REVERTED);
         }
     };
+    private final ObjectProperty<Runnable> onApply = new SimpleObjectProperty<>();
+    private final ObjectProperty<Runnable> onRevert = new SimpleObjectProperty<>();
     private final StringProperty title = new SimpleStringProperty();
     private final StringProperty description = new SimpleStringProperty();
 
@@ -207,6 +209,14 @@ public class ScheduledEffect extends StackPane implements Initializable {
 
         this.effect.apply();
         this.state.set(State.APPLIED);
+
+        if (event != null) {
+            Runnable runnable = this.getOnApply();
+
+            if (runnable != null) {
+                runnable.run();
+            }
+        }
     }
 
     /**
@@ -222,6 +232,14 @@ public class ScheduledEffect extends StackPane implements Initializable {
         }
 
         this.state.set(State.REVERTED);
+
+        if (event != null) {
+            Runnable runnable = this.getOnRevert();
+
+            if (runnable != null) {
+                runnable.run();
+            }
+        }
     }
 
     // </editor-fold>
@@ -253,6 +271,34 @@ public class ScheduledEffect extends StackPane implements Initializable {
     @Nonnull
     public ReadOnlyObjectProperty<State> stateProperty() {
         return this.state;
+    }
+
+    @Nullable
+    public Runnable getOnApply() {
+        return this.onApply.get();
+    }
+
+    @Nonnull
+    public ObjectProperty<Runnable> onApplyProperty() {
+        return this.onApply;
+    }
+
+    public void setOnApply(@Nullable Runnable onApply) {
+        this.onApply.set(onApply);
+    }
+
+    @Nullable
+    public Runnable getOnRevert() {
+        return this.onRevert.get();
+    }
+
+    @Nonnull
+    public ObjectProperty<Runnable> onRevertProperty() {
+        return this.onRevert;
+    }
+
+    public void setOnRevert(@Nullable Runnable onRevert) {
+        this.onRevert.set(onRevert);
     }
 
     @Nonnull

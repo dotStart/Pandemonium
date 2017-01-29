@@ -330,7 +330,7 @@ public class SettingsWindow implements Initializable {
 
         FileChooser chooser = new FileChooser();
         chooser.setTitle(this.messageSource.getMessage("settings.browse.clip.title"));
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(this.messageSource.getMessage("settings.browse.clip.type"), "*.aif", "*.aiff", "*.mp3", "*.wav"));
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(this.messageSource.getMessage("settings.browse.clip.type"), "*.aac", "*.aif", "*.aiff", "*.mp3", "*.wav"));
 
         if (value != null) {
             chooser.setInitialDirectory(value.getParent().toFile());

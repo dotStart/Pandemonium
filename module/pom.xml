@@ -40,6 +40,10 @@
         <!-- Modules -->
         <dependency>
             <groupId>tv.dotstart.pandemonium</groupId>
+            <artifactId>configuration</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tv.dotstart.pandemonium</groupId>
             <artifactId>fx</artifactId>
         </dependency>
         <dependency>

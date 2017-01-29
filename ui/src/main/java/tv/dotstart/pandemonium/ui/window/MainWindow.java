@@ -104,7 +104,7 @@ public class MainWindow implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.presetTextField.textProperty().addListener(this::onWindowPresetChange);
-        this.presetTextField.disableProperty().bind(this.activeProperty);
+        this.presetTextField.editableProperty().bind(this.activeProperty.not());
 
         this.presetLoadIconButton.visibleProperty().bind(this.generatedPreset.not().and(this.activeProperty.not()));
         this.presetLoadIconButton.managedProperty().bind(this.presetLoadIconButton.visibleProperty());

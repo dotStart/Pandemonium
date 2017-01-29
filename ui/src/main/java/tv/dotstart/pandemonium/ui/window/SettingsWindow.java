@@ -56,6 +56,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -102,6 +103,10 @@ public class SettingsWindow implements Initializable {
     private ToggleSwitch audioApplyToggleSwitch;
     @FXML
     private ToggleSwitch audioRevertToggleSwitch;
+    @FXML
+    private Slider audioVolumeSlider;
+    @FXML
+    private Label audioVolumeValueLabel;
 
     @FXML
     private TextField audioScheduleFileTextField;
@@ -231,6 +236,8 @@ public class SettingsWindow implements Initializable {
         this.audioScheduleToggleSwitch.selectedProperty().bindBidirectional(this.applicationConfiguration.audioPlayScheduleProperty());
         this.audioApplyToggleSwitch.selectedProperty().bindBidirectional(this.applicationConfiguration.audioPlayApplyProperty());
         this.audioRevertToggleSwitch.selectedProperty().bindBidirectional(this.applicationConfiguration.audioPlayRevertProperty());
+        this.audioVolumeSlider.valueProperty().bindBidirectional(this.applicationConfiguration.audioVolumeProperty());
+        this.audioVolumeValueLabel.textProperty().bind(Bindings.createStringBinding(this::updateAudioVolumeLabelText, this.audioVolumeSlider.valueProperty()));
 
         this.audioScheduleFileTextField.textProperty().bindBidirectional(this.applicationConfiguration.audioClipScheduleProperty());
         this.audioApplyFileTextField.textProperty().bindBidirectional(this.applicationConfiguration.audioClipApplyProperty());
@@ -402,6 +409,11 @@ public class SettingsWindow implements Initializable {
     // </editor-fold>
 
     // <editor-fold desc="Bindings">
+    @Nullable
+    private String updateAudioVolumeLabelText() {
+        return String.format("%d%%", (int) this.audioVolumeSlider.getValue());
+    }
+
     @Nullable
     private String updateWebAddressEffectTextField() {
         String address = this.webAddressTextField.getText();

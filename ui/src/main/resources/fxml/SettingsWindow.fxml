@@ -36,6 +36,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Slider?>
 <Window xmlns:fx="http://javafx.com/fxml" fx:id="root" fx:controller="tv.dotstart.pandemonium.ui.window.SettingsWindow" iconify="false" resize="false" minWidth="700" minHeight="500" maxWidth="700">
     <stylesheets>
         <URL value="@/css/SettingsWindow.css"/>
@@ -111,8 +112,15 @@
                 </GridPane>
 
                 <GridPane styleClass="properties">
-                    <Label text="%settings.audio.scheduleFile" styleClass="name" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.valignment="TOP" />
-                    <VBox GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                    <Label text="%settings.audio.volume" styleClass="name" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.valignment="TOP" />
+                    <VBox styleClass="control" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                        <Slider fx:id="audioVolumeSlider" minorTickCount="100" majorTickUnit="10" />
+                        <Label text="%settings.audio.volume.description" styleClass="description" />
+                    </VBox>
+                    <Label fx:id="audioVolumeValueLabel" styleClass="value" GridPane.rowIndex="0" GridPane.columnIndex="2" GridPane.valignment="TOP" />
+
+                    <Label text="%settings.audio.scheduleFile" styleClass="name" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.valignment="TOP" />
+                    <VBox GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS">
                         <HBox styleClass="file-chooser">
                             <TextField fx:id="audioScheduleFileTextField" editable="false" HBox.hgrow="ALWAYS" />
 
@@ -123,8 +131,8 @@
                         </HBox>
                     </VBox>
 
-                    <Label text="%settings.audio.applyFile" styleClass="name" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.valignment="TOP" />
-                    <VBox GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                    <Label text="%settings.audio.applyFile" styleClass="name" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.valignment="TOP" />
+                    <VBox GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS">
                         <HBox styleClass="file-chooser">
                             <TextField fx:id="audioApplyFileTextField" editable="false" HBox.hgrow="ALWAYS" />
 
@@ -135,8 +143,8 @@
                         </HBox>
                     </VBox>
 
-                    <Label text="%settings.audio.revertFile" styleClass="name" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.valignment="TOP" />
-                    <VBox GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                    <Label text="%settings.audio.revertFile" styleClass="name" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.valignment="TOP" />
+                    <VBox GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS">
                         <HBox styleClass="file-chooser">
                             <TextField fx:id="audioRevertFileTextField" editable="false" HBox.hgrow="ALWAYS" />
 

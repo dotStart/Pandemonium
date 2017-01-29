@@ -232,8 +232,9 @@ public class EffectManager {
 
             logger.info("Playing schedule audio clip: %s", uri);
             Media clip = new Media(uri);
-            MediaPlayer player = new MediaPlayer(clip);
 
+            MediaPlayer player = new MediaPlayer(clip);
+            player.setVolume(this.applicationConfiguration.getAudioVolume() / 100d);
             player.play();
         } catch (MalformedURLException ex) {
             logger.error("Audio clip path \"" + clipPath.toString() + "\" is invalid: " + ex.getMessage(), ex);

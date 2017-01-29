@@ -42,9 +42,11 @@ import javax.annotation.PostConstruct;
 
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -75,6 +77,7 @@ public class ApplicationConfiguration {
     private final BooleanProperty audioPlaySchedule = new SimpleBooleanProperty(false);
     private final BooleanProperty audioPlayApply = new SimpleBooleanProperty(false);
     private final BooleanProperty audioPlayRevert = new SimpleBooleanProperty(false);
+    private final DoubleProperty audioVolume = new SimpleDoubleProperty(1.0);
     private final StringProperty audioClipSchedule = new SimpleStringProperty();
     private final StringProperty audioClipApply = new SimpleStringProperty();
     private final StringProperty audioClipRevert = new SimpleStringProperty();
@@ -314,6 +317,20 @@ public class ApplicationConfiguration {
     @JsonProperty
     public void setAudioPlayRevert(boolean audioPlayRevert) {
         this.audioPlayRevert.set(audioPlayRevert);
+    }
+
+    public double getAudioVolume() {
+        return this.audioVolume.get();
+    }
+
+    @Nonnull
+    public DoubleProperty audioVolumeProperty() {
+        return this.audioVolume;
+    }
+
+    @JsonProperty
+    public void setAudioVolume(double audioVolume) {
+        this.audioVolume.set(audioVolume);
     }
 
     public String getAudioClipSchedule() {

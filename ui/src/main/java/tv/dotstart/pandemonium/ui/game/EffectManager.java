@@ -19,6 +19,7 @@ package tv.dotstart.pandemonium.ui.game;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.net.MalformedURLException;
@@ -40,6 +41,7 @@ import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.media.Media;
@@ -56,6 +58,8 @@ import tv.dotstart.pandemonium.fx.localization.ConfigurationAwareMessageSource;
 import tv.dotstart.pandemonium.game.GameConfiguration;
 import tv.dotstart.pandemonium.game.GameStateMapper;
 import tv.dotstart.pandemonium.process.Process;
+import tv.dotstart.pandemonium.ui.event.RemoveEffectEvent;
+import tv.dotstart.pandemonium.ui.event.ScheduleEffectEvent;
 
 /**
  * Manages the lifetime of effects within the application.
@@ -79,6 +83,7 @@ public class EffectManager {
             new KeyFrame(Duration.millis(500), this::checkState)
     );
 
+    private final ApplicationContext context;
     private final ApplicationConfiguration applicationConfiguration;
     private final ConfigurationAwareMessageSource messageSource;
 
@@ -86,7 +91,8 @@ public class EffectManager {
     private GameStateMapper stateMapper;
 
     @Autowired
-    public EffectManager(@Nonnull ApplicationConfiguration applicationConfiguration, @Nonnull ConfigurationAwareMessageSource messageSource) {
+    public EffectManager(@Nonnull ApplicationContext context, @Nonnull ApplicationConfiguration applicationConfiguration, @Nonnull ConfigurationAwareMessageSource messageSource) {
+        this.context = context;
         this.applicationConfiguration = applicationConfiguration;
         this.messageSource = messageSource;
 
@@ -94,6 +100,19 @@ public class EffectManager {
         this.stateTimeline.setCycleCount(Animation.INDEFINITE);
 
         this.process.addListener(this::onProcessInvalidated);
+        this.effectList.addListener((ListChangeListener<ScheduledEffect>) c -> {
+            List<? extends ScheduledEffect> added = c.getAddedSubList();
+
+            if (!added.isEmpty()) {
+                added.forEach((e) -> this.context.publishEvent(new ScheduleEffectEvent(e)));
+            }
+
+            List<? extends ScheduledEffect> removed = c.getRemoved();
+
+            if (!removed.isEmpty()) {
+                removed.forEach((e) -> this.context.publishEvent(new RemoveEffectEvent(e)));
+            }
+        });
     }
 
     /**

@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -81,6 +82,7 @@ public class ScheduledEffect extends StackPane implements Initializable {
     private final StringProperty title = new SimpleStringProperty();
     private final StringProperty description = new SimpleStringProperty();
 
+    private final UUID id = UUID.randomUUID();
     private final EffectFactory factory;
     private final Effect effect;
     private final Duration delay;
@@ -245,6 +247,11 @@ public class ScheduledEffect extends StackPane implements Initializable {
     // </editor-fold>
 
     // <editor-fold desc="Getters & Setters">
+    @Nonnull
+    public UUID getEffectId() {
+        return this.id;
+    }
+
     @Nonnull
     public EffectFactory getFactory() {
         return this.factory;

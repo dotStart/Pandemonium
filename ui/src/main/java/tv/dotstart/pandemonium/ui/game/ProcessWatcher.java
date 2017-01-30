@@ -19,6 +19,8 @@ package tv.dotstart.pandemonium.ui.game;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextClosedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
@@ -72,6 +74,15 @@ public class ProcessWatcher {
 
         this.effectManager.gameConfigurationProperty().bind(this.gameConfigurationProperty());
         this.effectManager.processProperty().bind(this.process);
+    }
+
+    /**
+     * Handles context closing.
+     */
+    @EventListener
+    private void onContextClose(@Nonnull ContextClosedEvent event) {
+        logger.info("Graceful process shutdown requested by closing context");
+        this.shutdown();
     }
 
     /**

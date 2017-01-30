@@ -16,11 +16,18 @@
  */
 package tv.dotstart.pandemonium.web;
 
+import org.apache.logging.log4j.LogManager;
+import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 import javax.annotation.Nonnull;
 
@@ -45,6 +52,31 @@ public class WebConfiguration {
     @Bean
     @Nonnull
     public EmbeddedServletContainerFactory embeddedServletContainerFactory(@Nonnull ApplicationConfiguration configuration) {
-        return new JettyEmbeddedServletContainerFactory("", configuration.getWebPort());
+        JettyEmbeddedServletContainerFactory factory = new JettyEmbeddedServletContainerFactory("", configuration.getWebPort());
+        factory.setServerHeader("Pandemonium");
+
+        QueuedThreadPool threadPool = new QueuedThreadPool(4, 2);
+        threadPool.setDaemon(false);
+
+        factory.setThreadPool(threadPool);
+
+        try {
+            InetAddress address = InetAddress.getByName(configuration.getWebAddress());
+
+            if (NetworkInterface.getByInetAddress(address) == null) {
+                throw new IllegalStateException();
+            }
+
+            factory.setAddress(InetAddress.getByName(configuration.getWebAddress()));
+        } catch (IllegalStateException | SocketException | UnknownHostException ex) {
+            LogManager.getFormatterLogger(WebConfiguration.class).warn("Address %s is not available - Falling back to loopback", configuration.getWebAddress());
+
+            InetAddress address = InetAddress.getLoopbackAddress();
+            factory.setAddress(address);
+
+            configuration.setWebAddress(address.getHostAddress());
+        }
+
+        return factory;
     }
 }

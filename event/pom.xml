@@ -28,66 +28,33 @@
     </parent>
 
     <!-- Artifact Information -->
-    <artifactId>web</artifactId>
+    <artifactId>event</artifactId>
     <packaging>jar</packaging>
 
     <!-- Artifact Metadata -->
-    <name>Pandemonium Web</name>
-    <description>Provides a web interface which displays information on the currently active effects.</description>
+    <name>Pandemonium Effects</name>
+    <description>Provides an abstraction around game effects.</description>
 
     <!-- Dependencies -->
     <dependencies>
         <!-- Modules -->
         <dependency>
             <groupId>tv.dotstart.pandemonium</groupId>
-            <artifactId>configuration</artifactId>
+            <artifactId>effect</artifactId>
         </dependency>
         <dependency>
             <groupId>tv.dotstart.pandemonium</groupId>
-            <artifactId>event</artifactId>
+            <artifactId>game</artifactId>
         </dependency>
-
-        <!-- Injection -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
+            <groupId>tv.dotstart.pandemonium</groupId>
+            <artifactId>fx</artifactId>
         </dependency>
 
         <!-- Utilities -->
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-        </dependency>
-
-        <!-- Web -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jetty</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-logging</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>sockjs-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>stomp-websocket</artifactId>
         </dependency>
     </dependencies>
 

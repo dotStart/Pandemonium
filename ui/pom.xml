@@ -48,6 +48,10 @@
         </dependency>
         <dependency>
             <groupId>tv.dotstart.pandemonium</groupId>
+            <artifactId>event</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tv.dotstart.pandemonium</groupId>
             <artifactId>fx</artifactId>
         </dependency>
         <dependency>

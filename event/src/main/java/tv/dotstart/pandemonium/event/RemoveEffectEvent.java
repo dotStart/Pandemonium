@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.pandemonium.ui.event;
+package tv.dotstart.pandemonium.event;
 
 import javax.annotation.Nonnull;
 

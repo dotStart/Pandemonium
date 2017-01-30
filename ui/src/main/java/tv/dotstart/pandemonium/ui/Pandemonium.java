@@ -100,6 +100,16 @@ public class Pandemonium extends Application {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void stop() throws Exception {
+        logger.info("Bye! :)");
+
+        this.context.close();
+    }
+
+    /**
      * Provides a Java entry-point which directly launches JavaFX as well as the backing framework
      * implementation.
      */

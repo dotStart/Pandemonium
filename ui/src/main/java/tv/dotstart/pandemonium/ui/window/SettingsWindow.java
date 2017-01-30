@@ -447,7 +447,7 @@ public class SettingsWindow implements Initializable {
             address = "localhost";
         }
 
-        return "http://" + address + (!"80".equals(port) ? ":" + port : "") + "/";
+        return "http://" + address + (!"80".equals(port) ? ":" + port : "") + "/effect";
     }
 
     @Nullable

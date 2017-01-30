@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8" />
+
+        <!-- Metadata -->
+        <title>Pandemonium</title>
+        <meta name="description" content="The only program that purposefully ruins your day!" />
+        <meta name="keywords" content="Pandemonium,Speedrun,Chaos,Cheat,Mod" />
+        <meta name="robots" content="index,follow" />
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css" />
+        <link rel="stylesheet" type="text/css" href="{{ '/style/pandemonium.css' | relative_url }}" />
+    </head>
+    <body>
+        <header id="page-header" class="ui inverted vertical very padded segment">
+            <section class="ui inner container">
+                <div class="ui large secondary inverted menu">
+                    <a href="{{ '/' | relative_url }}" class="item">
+                        <img src="{{ '/images/logo.png' | relative_url }}" class="ui img" />
+                    </a>
+
+                    <div class="right menu">
+                        <a href="https://github.com/dotStart/Pandemonium/releases" class="item">
+                            <i class="rocket icon"></i>
+                            Releases
+                        </a>
+                        <a href="https://github.com/dotStart/Pandemonium" class="item">
+                            <i class="github icon"></i>
+                            Source Code
+                        </a>
+                    </div>
+                </div>
+
+                <section id="pitch" class="ui center aligned grid">
+                    <div class="eight wide column">
+                        <h1>Spice up your Speedruns</h1>
+                        <p>Choose from a list of effects to randomly apply to your game to ramp up your difficulty dramatically and provide some fresh entertainment on your streams</p>
+
+                        <div id="download-buttons">
+                            {% for asset in site.github.releases[0].assets %}
+                                {% if asset.content_type == "application/x-msdownload" %}
+                                    <a href="#" class="ui disabled inverted huge button">
+                                        <i class="windows icon"></i>
+                                        Windows
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+
+                <section id="screenshot-container" class="ui center aligned basic segment">
+                    <img id="screenshot" class="ui img" src="{{ '/images/applicationScreenshot.png' | relative_url }}" />
+                </section>
+            </section>
+        </header>
+        <main id="page-main" class="ui vertical very padded segment">
+            <section class="ui inner container">
+                {{ content }}
+            </section>
+        </main>
+        <footer id="page-footer" class="ui vertical very padded segment">
+            <section class="ui inner container">
+                <p>Test</p>
+            </section>
+        </footer>
+    </body>
+</html>

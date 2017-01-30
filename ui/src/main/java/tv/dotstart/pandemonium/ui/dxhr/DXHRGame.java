@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.pandemonium.ui.test;
+package tv.dotstart.pandemonium.ui.dxhr;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,13 +36,13 @@ import tv.dotstart.pandemonium.game.GameStateMapper;
 import tv.dotstart.pandemonium.game.Metadata;
 import tv.dotstart.pandemonium.process.Process;
 import tv.dotstart.pandemonium.process.ProcessMemoryPointer;
-import tv.dotstart.pandemonium.ui.test.effect.BulletEffectFactory;
-import tv.dotstart.pandemonium.ui.test.effect.DifficultyEffectFactory;
-import tv.dotstart.pandemonium.ui.test.effect.FieldOfViewEffectFactory;
-import tv.dotstart.pandemonium.ui.test.effect.MouseSensitivityEffectFactory;
-import tv.dotstart.pandemonium.ui.test.effect.ObjectiveLocatorEffectFactory;
-import tv.dotstart.pandemonium.ui.test.effect.PraxisEffectFactory;
-import tv.dotstart.pandemonium.ui.test.effect.ReticleEffectFactory;
+import tv.dotstart.pandemonium.ui.dxhr.effect.BulletEffectFactory;
+import tv.dotstart.pandemonium.ui.dxhr.effect.DifficultyEffectFactory;
+import tv.dotstart.pandemonium.ui.dxhr.effect.FieldOfViewEffectFactory;
+import tv.dotstart.pandemonium.ui.dxhr.effect.MouseSensitivityEffectFactory;
+import tv.dotstart.pandemonium.ui.dxhr.effect.ObjectiveLocatorEffectFactory;
+import tv.dotstart.pandemonium.ui.dxhr.effect.PraxisEffectFactory;
+import tv.dotstart.pandemonium.ui.dxhr.effect.ReticleEffectFactory;
 
 /**
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>

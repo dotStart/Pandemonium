@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.pandemonium.ui.test.effect;
+package tv.dotstart.pandemonium.ui.dxhr.effect;
 
 import javax.annotation.Nonnull;
 
@@ -26,8 +26,16 @@ import tv.dotstart.pandemonium.process.ProcessMemoryPointer;
 /**
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
-public class ReticleEffectFactory implements EffectFactory {
-    private static final long RETICLE_PTR = 0x185593C;
+public class DifficultyEffectFactory implements EffectFactory {
+    private static final long DIFFICULTY_PTR = 0x1855950;
+
+    private final int effectId;
+    private final byte level;
+
+    DifficultyEffectFactory(int effectId, byte level) {
+        this.effectId = effectId;
+        this.level = level;
+    }
 
     /**
      * {@inheritDoc}
@@ -36,25 +44,25 @@ public class ReticleEffectFactory implements EffectFactory {
     @Override
     public Effect build(@Nonnull Process process) {
         return new Effect() {
-            private final ProcessMemoryPointer reticlePointer = process.pointer("dxhr.exe", RETICLE_PTR);
+            private final ProcessMemoryPointer difficultyPointer = process.pointer("dxhr.exe", DIFFICULTY_PTR);
 
-            private boolean enabled;
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void apply() {
-                this.enabled = this.reticlePointer.readByte() == 1;
-                this.reticlePointer.writeByte((byte) (this.enabled ? 0 : 1));
-            }
+            private byte level;
 
             /**
              * {@inheritDoc}
              */
             @Override
             public void revert() {
-                this.reticlePointer.writeByte((byte) (this.enabled ? 1 : 0));
+                this.level = this.difficultyPointer.readByte();
+                this.difficultyPointer.writeByte(DifficultyEffectFactory.this.level);
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void apply() {
+                this.difficultyPointer.writeByte(this.level);
             }
         };
     }
@@ -64,6 +72,32 @@ public class ReticleEffectFactory implements EffectFactory {
      */
     @Override
     public int getEffectId() {
-        return 16;
+        return this.effectId;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isCompatibleWith(@Nonnull EffectFactory factory, @Nonnull Effect effect) {
+        return !(factory instanceof DifficultyEffectFactory);
+    }
+
+    public static class Easy extends DifficultyEffectFactory {
+        public Easy() {
+            super(2, (byte) 0);
+        }
+    }
+
+    public static class Hard extends DifficultyEffectFactory {
+        public Hard() {
+            super(3, (byte) 2);
+        }
+    }
+
+    public static class Medium extends DifficultyEffectFactory {
+        public Medium() {
+            super(4, (byte) 1);
+        }
     }
 }

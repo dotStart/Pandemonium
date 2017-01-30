@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.pandemonium.ui.test.effect;
+package tv.dotstart.pandemonium.ui.dxhr.effect;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;

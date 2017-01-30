@@ -14,9 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.pandemonium.ui.test.effect;
+package tv.dotstart.pandemonium.ui.dxhr.effect;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import tv.dotstart.pandemonium.effect.Effect;
@@ -27,16 +26,8 @@ import tv.dotstart.pandemonium.process.ProcessMemoryPointer;
 /**
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
-public abstract class FieldOfViewEffectFactory implements EffectFactory {
-    private static final long FOV_PTR = 0x1855954;
-
-    private final int effectId;
-    private final int fov;
-
-    protected FieldOfViewEffectFactory(@Nonnegative int effectId, @Nonnegative int fov) {
-        this.effectId = effectId;
-        this.fov = fov;
-    }
+public class ReticleEffectFactory implements EffectFactory {
+    private static final long RETICLE_PTR = 0x185593C;
 
     /**
      * {@inheritDoc}
@@ -45,17 +36,17 @@ public abstract class FieldOfViewEffectFactory implements EffectFactory {
     @Override
     public Effect build(@Nonnull Process process) {
         return new Effect() {
-            private final ProcessMemoryPointer fovPointer = process.pointer("dxhr.exe", FOV_PTR);
+            private final ProcessMemoryPointer reticlePointer = process.pointer("dxhr.exe", RETICLE_PTR);
 
-            private int fov;
+            private boolean enabled;
 
             /**
              * {@inheritDoc}
              */
             @Override
             public void apply() {
-                this.fov = this.fovPointer.readInteger();
-                this.fovPointer.writeInteger(FieldOfViewEffectFactory.this.fov);
+                this.enabled = this.reticlePointer.readByte() == 1;
+                this.reticlePointer.writeByte((byte) (this.enabled ? 0 : 1));
             }
 
             /**
@@ -63,7 +54,7 @@ public abstract class FieldOfViewEffectFactory implements EffectFactory {
              */
             @Override
             public void revert() {
-                this.fovPointer.writeInteger(this.fov);
+                this.reticlePointer.writeByte((byte) (this.enabled ? 1 : 0));
             }
         };
     }
@@ -73,26 +64,6 @@ public abstract class FieldOfViewEffectFactory implements EffectFactory {
      */
     @Override
     public int getEffectId() {
-        return this.effectId;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isCompatibleWith(@Nonnull EffectFactory factory, @Nonnull Effect effect) {
-        return !(factory instanceof FieldOfViewEffectFactory);
-    }
-
-    public static class High extends FieldOfViewEffectFactory {
-        public High() {
-            super(5, 179);
-        }
-    }
-
-    public static class Low extends FieldOfViewEffectFactory {
-        public Low() {
-            super(6, 20);
-        }
+        return 16;
     }
 }

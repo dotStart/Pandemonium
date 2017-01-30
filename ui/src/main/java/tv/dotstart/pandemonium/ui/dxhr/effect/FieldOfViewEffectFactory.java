@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tv.dotstart.pandemonium.ui.test.effect;
+package tv.dotstart.pandemonium.ui.dxhr.effect;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import tv.dotstart.pandemonium.effect.Effect;
@@ -26,8 +27,16 @@ import tv.dotstart.pandemonium.process.ProcessMemoryPointer;
 /**
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
-public class ObjectiveLocatorEffectFactory implements EffectFactory {
-    private static final long LOCATOR_PTR = 0x1855919;
+public abstract class FieldOfViewEffectFactory implements EffectFactory {
+    private static final long FOV_PTR = 0x1855954;
+
+    private final int effectId;
+    private final int fov;
+
+    protected FieldOfViewEffectFactory(@Nonnegative int effectId, @Nonnegative int fov) {
+        this.effectId = effectId;
+        this.fov = fov;
+    }
 
     /**
      * {@inheritDoc}
@@ -36,17 +45,17 @@ public class ObjectiveLocatorEffectFactory implements EffectFactory {
     @Override
     public Effect build(@Nonnull Process process) {
         return new Effect() {
-            private final ProcessMemoryPointer locatorPointer = process.pointer("dxhr.exe", LOCATOR_PTR);
+            private final ProcessMemoryPointer fovPointer = process.pointer("dxhr.exe", FOV_PTR);
 
-            private boolean enabled;
+            private int fov;
 
             /**
              * {@inheritDoc}
              */
             @Override
             public void apply() {
-                this.enabled = this.locatorPointer.readByte() == 1;
-                this.locatorPointer.writeByte((byte) (this.enabled ? 0 : 1));
+                this.fov = this.fovPointer.readInteger();
+                this.fovPointer.writeInteger(FieldOfViewEffectFactory.this.fov);
             }
 
             /**
@@ -54,7 +63,7 @@ public class ObjectiveLocatorEffectFactory implements EffectFactory {
              */
             @Override
             public void revert() {
-                this.locatorPointer.writeByte((byte) (this.enabled ? 1 : 0));
+                this.fovPointer.writeInteger(this.fov);
             }
         };
     }
@@ -64,6 +73,26 @@ public class ObjectiveLocatorEffectFactory implements EffectFactory {
      */
     @Override
     public int getEffectId() {
-        return 13;
+        return this.effectId;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isCompatibleWith(@Nonnull EffectFactory factory, @Nonnull Effect effect) {
+        return !(factory instanceof FieldOfViewEffectFactory);
+    }
+
+    public static class High extends FieldOfViewEffectFactory {
+        public High() {
+            super(5, 179);
+        }
+    }
+
+    public static class Low extends FieldOfViewEffectFactory {
+        public Low() {
+            super(6, 20);
+        }
     }
 }

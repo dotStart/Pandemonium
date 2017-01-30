@@ -107,7 +107,7 @@
 
     <!-- Build Settings -->
     <build>
-        <finalName>Pandemonium-${project.version}</finalName>
+        <finalName>Pandemonium</finalName>
 
         <plugins>
             <plugin>

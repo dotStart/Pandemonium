@@ -55,9 +55,8 @@ public class WebConfiguration {
         JettyEmbeddedServletContainerFactory factory = new JettyEmbeddedServletContainerFactory("", configuration.getWebPort());
         factory.setServerHeader("Pandemonium");
 
-        QueuedThreadPool threadPool = new QueuedThreadPool(4, 2);
+        QueuedThreadPool threadPool = new QueuedThreadPool();
         threadPool.setDaemon(false);
-
         factory.setThreadPool(threadPool);
 
         try {

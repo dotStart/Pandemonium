@@ -1,0 +1,7 @@
+baseurl: ""
+repository: dotStart/Pandemonium
+
+markdown: kramdown
+exclude:
+  - Gemfile
+  - Gemfile.lock

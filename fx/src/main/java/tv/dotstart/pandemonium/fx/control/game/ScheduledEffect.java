@@ -270,7 +270,7 @@ public class ScheduledEffect extends StackPane implements Initializable {
         this.progress.set(progress);
     }
 
-    @Nonnull
+    @Nullable
     public State getState() {
         return this.state.get();
     }

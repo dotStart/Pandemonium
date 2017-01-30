@@ -101,16 +101,18 @@ public class EffectManager {
 
         this.process.addListener(this::onProcessInvalidated);
         this.effectList.addListener((ListChangeListener<ScheduledEffect>) c -> {
-            List<? extends ScheduledEffect> added = c.getAddedSubList();
+            while (c.next()) {
+                List<? extends ScheduledEffect> added = c.getAddedSubList();
 
-            if (!added.isEmpty()) {
-                added.forEach((e) -> this.context.publishEvent(new ScheduleEffectEvent(e)));
-            }
+                if (!added.isEmpty()) {
+                    added.forEach((e) -> this.context.publishEvent(new ScheduleEffectEvent(e)));
+                }
 
-            List<? extends ScheduledEffect> removed = c.getRemoved();
+                List<? extends ScheduledEffect> removed = c.getRemoved();
 
-            if (!removed.isEmpty()) {
-                removed.forEach((e) -> this.context.publishEvent(new RemoveEffectEvent(e)));
+                if (!removed.isEmpty()) {
+                    removed.forEach((e) -> this.context.publishEvent(new RemoveEffectEvent(e)));
+                }
             }
         });
     }

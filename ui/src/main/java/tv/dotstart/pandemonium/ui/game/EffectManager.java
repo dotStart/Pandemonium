@@ -52,14 +52,14 @@ import tv.dotstart.pandemonium.configuration.ApplicationConfiguration;
 import tv.dotstart.pandemonium.effect.Effect;
 import tv.dotstart.pandemonium.effect.EffectConfiguration;
 import tv.dotstart.pandemonium.effect.EffectFactory;
+import tv.dotstart.pandemonium.event.RemoveEffectEvent;
+import tv.dotstart.pandemonium.event.ScheduleEffectEvent;
 import tv.dotstart.pandemonium.fx.control.GameStateLabel;
 import tv.dotstart.pandemonium.fx.control.game.ScheduledEffect;
 import tv.dotstart.pandemonium.fx.localization.ConfigurationAwareMessageSource;
 import tv.dotstart.pandemonium.game.GameConfiguration;
 import tv.dotstart.pandemonium.game.GameStateMapper;
 import tv.dotstart.pandemonium.process.Process;
-import tv.dotstart.pandemonium.ui.event.RemoveEffectEvent;
-import tv.dotstart.pandemonium.ui.event.ScheduleEffectEvent;
 
 /**
  * Manages the lifetime of effects within the application.

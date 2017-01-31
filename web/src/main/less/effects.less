@@ -1,0 +1,96 @@
+/*
+ * Copyright 2017 Johannes Donath <me@dotstart.tv>
+ * and other copyright owners as documented in the project's IP log.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+@color-blue: #6c71c4;
+@color-green: #73994d;
+@color-red: #D25252;
+@color-orange: #cb4b16;
+
+body {
+  font-family: Roboto, 'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.effect-list {
+  display: block;
+
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 0 1vw;
+
+  .effect {
+    position: relative;
+    height: 20vh;
+    margin-top: 2vh;
+
+    .progress {
+      position: absolute;
+      width: 100%;
+      z-index: -1;
+
+      background: #212121;
+
+      &,
+      .bar {
+        height: 100%;
+        border-radius: .5em;
+      }
+
+      .bar {
+        background: @color-orange;
+      }
+    }
+
+    &.applied .bar {
+      background: @color-red;
+    }
+
+    &.reverted .bar {
+      background: @color-blue;
+    }
+
+    .inner,
+    .detail {
+      box-sizing: border-box;
+      height: 100%;
+    }
+
+    .inner {
+      padding: 1vh 2vw;
+    }
+
+    .detail {
+      color: #FFFFFF;
+      font-size: 6vh;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .title,
+      .description {
+        display: block;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .description {
+        font-weight: 300;
+      }
+    }
+  }
+}

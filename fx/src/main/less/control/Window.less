@@ -1,0 +1,250 @@
+/*
+ * Copyright 2017 Johannes Donath <me@dotstart.tv>
+ * and other copyright owners as documented in the project's IP log.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+@base-color: #2B2B2B;
+@accent-color: #D25252;
+@border-color: #282828;
+
+@base-accent-color: darken(@base-color, 3%);
+
+.window {
+  -fx-base: @base-color;
+  -fx-accent: @accent-color;
+
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+
+  &.transparent {
+    -fx-padding: 10px;
+    -fx-fill: transparent;
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0.5, 0, 0);
+  }
+
+  .inner {
+    -fx-border-color: @border-color;
+    -fx-border-width: 1px;
+  }
+
+  .content {
+    -fx-background-color: -fx-base;
+    -fx-spacing: 15px;
+  }
+
+  .resize-grip .glyph-font {
+    -fx-text-fill: rgba(255, 255, 255, 0.5);
+  }
+
+  .button {
+    -fx-base: -fx-accent;
+
+    &,
+    .glyph-font {
+      -fx-text-fill: white;
+    }
+
+    &:hover,
+    &:hover .glyph-font {
+      -fx-text-fill: black;
+    }
+  }
+
+  .hyperlink {
+    -fx-padding: 0;
+    -fx-underline: false;
+    -fx-text-fill: -fx-accent;
+
+    &:hover {
+      -fx-underline: true;
+      -fx-text-fill: -fx-accent;
+    }
+
+    &:visited {
+      -fx-underline: false;
+      -fx-text-fill: lighten(@accent-color, 5%);
+
+      &:hover {
+        -fx-underline: true;
+      }
+    }
+  }
+
+  .list-view {
+    -fx-background-color: #313335;
+
+    &:focused {
+      -fx-background-insets: 0, 0, 1;
+    }
+
+    .list-cell {
+      -fx-background-color: transparent;
+
+      &:selected {
+        -fx-background-color: -fx-accent;
+      }
+
+      &,
+      .label,
+      .labelled {
+        -fx-text-fill: white;
+      }
+    }
+  }
+
+  .split-pane {
+    -fx-background-color: transparent, transparent;
+    -fx-padding: 0;
+
+    .split-pane-divider {
+      -fx-background-color: @base-accent-color;
+    }
+  }
+
+  .scroll-bar {
+    &,
+    .track {
+      -fx-background-color: transparent;
+    }
+
+    .thumb {
+      -fx-background-color: -fx-accent;
+      -fx-background-radius: 2em;
+    }
+
+    .decrement-button,
+    .increment-button {
+      -fx-padding: 0 3px;
+      -fx-background-color:transparent;
+    }
+
+    .decrement-button .decrement-arrow,
+    .increment-button .increment-arrow {
+      -fx-shape: " ";
+      -fx-padding: 0 2px;
+    }
+
+    &:horizontal {
+      -fx-padding: 10px 0 0 0;
+    }
+
+    &:vertical {
+      -fx-padding: 0 0 0 10px;
+    }
+  }
+
+  .slider,
+  .range-slider{
+    .track {
+      -fx-background-color: @base-accent-color;
+    }
+
+    .thumb,
+    .low-thumb,
+    .high-thumb {
+      -fx-base: white;
+    }
+  }
+
+  .popover {
+
+    &,
+    .content {
+      -fx-padding: 0;
+    }
+
+    .border {
+      -fx-fill: -fx-accent;
+    }
+
+    .label,
+    .label .glyph-font {
+      -fx-text-fill: white;
+    }
+
+    .header,
+    .inner {
+      -fx-border-width: 0;
+    }
+
+    .inner {
+      -fx-padding: 8px;
+      -fx-background-color: white;
+
+      .label,
+      .label .glyph-font {
+        -fx-text-fill: black;
+      }
+
+      .label {
+        -fx-font-size: 12px;
+      }
+    }
+  }
+
+  .properties {
+    -fx-hgap: 15px;
+    -fx-vgap: 5px;
+  }
+
+  .range-slider {
+    .range-bar {
+      -fx-background-color: -fx-accent;
+    }
+  }
+
+  .tab-list-pane {
+    .tab-content {
+      -fx-padding: 10px 25px;
+    }
+  }
+
+  .tab-pane {
+    -fx-padding: 0;
+
+    &,
+    .tab-header-area,
+    .tab-header-background {
+      -fx-background-color: transparent;
+    }
+
+    .tab {
+      -fx-padding: 1em 3em;
+
+      .tab-label {
+        -fx-rotate: 90;
+      }
+    }
+  }
+
+  .text-field {
+    -fx-text-fill: white;
+    -fx-background-color: @base-accent-color;
+  }
+
+  .toggle-switch {
+    .thumb {
+      -fx-base: white;
+    }
+
+    .thumb-area {
+      -fx-background-color: @base-accent-color;
+    }
+
+    &:selected .thumb-area {
+      -fx-background-color: -fx-accent;
+    }
+  }
+}

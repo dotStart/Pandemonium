@@ -1,0 +1,46 @@
+<!--
+  ~ Copyright 2017 Johannes Donath <me@dotstart.tv>
+  ~ and other copyright owners as documented in the project's IP log.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<?import java.net.URL?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:id="root" fx:controller="tv.dotstart.pandemonium.ui.window.SplashScreen" styleClass="window" minWidth="600" minHeight="300">
+    <stylesheets>
+        <URL value="@/css/SplashScreen.css"/>
+    </stylesheets>
+
+    <StackPane styleClass="inner" VBox.vgrow="ALWAYS">
+        <ImageView styleClass="logo">
+            <Image url="@/icon/application-text512.png" />
+        </ImageView>
+
+        <VBox styleClass="overlay">
+            <Pane VBox.vgrow="ALWAYS" />
+
+            <HBox styleClass="detail">
+                <Label fx:id="statusLabel" text="Status ..." />
+            </HBox>
+
+            <ProgressBar fx:id="progressBar" progress="0" />
+        </VBox>
+    </StackPane>
+</VBox>

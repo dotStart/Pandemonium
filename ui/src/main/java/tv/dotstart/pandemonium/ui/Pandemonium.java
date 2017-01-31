@@ -30,7 +30,9 @@ import javax.annotation.Nonnull;
 
 import javafx.application.Application;
 import javafx.application.ConditionalFeature;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import tv.dotstart.pandemonium.configuration.ApplicationConfiguration;
@@ -39,6 +41,7 @@ import tv.dotstart.pandemonium.fx.FXExceptionHandler;
 import tv.dotstart.pandemonium.ui.configuration.helper.DefaultApplicationConfiguration;
 import tv.dotstart.pandemonium.ui.configuration.helper.WebEnabledApplicationConfiguration;
 import tv.dotstart.pandemonium.ui.window.MainWindow;
+import tv.dotstart.pandemonium.ui.window.SplashScreen;
 
 /**
  * Provides a JavaFX entry-point to the application which initializes the backing framework
@@ -92,10 +95,16 @@ public class Pandemonium extends Application {
         Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
 
         // bootstrap the main application scene into our primary stage
+        Scene rootScene = this.context.getBean(FX.class).createScene(SplashScreen.class);
+
+        if (javafx.application.Platform.isSupported(ConditionalFeature.TRANSPARENT_WINDOW)) {
+            rootScene.setFill(Color.TRANSPARENT);
+        }
+
         primaryStage.initStyle((javafx.application.Platform.isSupported(ConditionalFeature.TRANSPARENT_WINDOW) ? StageStyle.TRANSPARENT : StageStyle.UNDECORATED));
         primaryStage.getIcons().add(new Image(Pandemonium.class.getResource("/icon/application256.png").toExternalForm()));
         primaryStage.setTitle("Pandemonium");
-        primaryStage.setScene(this.context.getBean(FX.class).createScene(MainWindow.class));
+        primaryStage.setScene(rootScene);
         primaryStage.show();
     }
 

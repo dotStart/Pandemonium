@@ -487,11 +487,24 @@
                                 <outfile>${project.build.directory}/bin/${project.build.finalName}.exe</outfile>
                                 <jar>${project.build.finalName}.jar</jar>
                                 <icon>${project.basedir}/src/main/resources/icon/application16.ico</icon>
+                                <manifest>${project.basedir}/src/WindowsManifest.xml</manifest>
                                 <dontWrapJar>true</dontWrapJar>
                                 <errTitle>Pandemonium</errTitle>
 
+                                <singleInstance>
+                                    <mutexName>pandemonium</mutexName>
+                                    <windowTitle>Pandemonium</windowTitle>
+                                </singleInstance>
+
                                 <jre>
                                     <minVersion>1.8.0</minVersion>
+                                    <jdkPreference>preferJre</jdkPreference>
+
+                                    <!--
+                                    <path>../jre</path>
+                                    <bundledJre64Bit>true</bundledJre64Bit>
+                                    <bundledJreAsFallback>false</bundledJreAsFallback>
+                                    -->
                                 </jre>
 
                                 <versionInfo>

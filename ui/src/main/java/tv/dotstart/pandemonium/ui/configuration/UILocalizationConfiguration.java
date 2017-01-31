@@ -44,6 +44,7 @@ public class UILocalizationConfiguration {
     @Nonnull
     public MessageSource gameMessageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setDefaultEncoding("UTF-8");
         messageSource.setBasename("localization/game");
         messageSource.setBundleClassLoader(this.getClass().getClassLoader());
 
@@ -61,6 +62,7 @@ public class UILocalizationConfiguration {
     @Nonnull
     public MessageSource uiMessageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setDefaultEncoding("UTF-8");
         messageSource.setBasename("localization/ui");
         messageSource.setBundleClassLoader(this.getClass().getClassLoader());
 

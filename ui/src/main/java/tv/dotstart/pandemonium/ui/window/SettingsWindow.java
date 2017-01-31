@@ -440,6 +440,11 @@ public class SettingsWindow implements Initializable {
             throw new RuntimeException("Failed to display copyright information: " + ex.getMessage(), ex);
         }
     }
+
+    @FXML
+    private void onWebGuide() {
+        this.hostServices.showDocument("https://github.com/dotStart/Pandemonium/wiki/Stream-Guide");
+    }
     // </editor-fold>
 
     // <editor-fold desc="Bindings">

@@ -232,7 +232,7 @@
                     <HBox styleClass="footer">
                         <Pane HBox.hgrow="ALWAYS" />
 
-                        <IconButton styleClass="help" fontName="FontAwesome" fontSize="24" glyphName="QUESTION_CIRCLE" GridPane.rowIndex="0" GridPane.columnIndex="2">
+                        <IconButton styleClass="help" onAction="#onWebGuide" fontName="FontAwesome" fontSize="24" glyphName="QUESTION_CIRCLE" GridPane.rowIndex="0" GridPane.columnIndex="2">
                                 <tooltip>
                                     <Tooltip text="%settings.web.guide" />
                                 </tooltip>

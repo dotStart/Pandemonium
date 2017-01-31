@@ -375,7 +375,7 @@
 
                     <configuration>
                         <outputDirectory>${project.build.directory}</outputDirectory>
-                        <thirdPartyFilename>THIRD-PARTY</thirdPartyFilename>
+                        <thirdPartyFilename>THIRD-PARTY.txt</thirdPartyFilename>
                         <licensesOutputDirectory>${project.build.directory}/licenses</licensesOutputDirectory>
 
                         <excludedGroups>${project.groupId}</excludedGroups>

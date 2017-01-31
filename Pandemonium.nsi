@@ -72,7 +72,7 @@ FunctionEnd
 Section "Pandemonium" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-  File "ui\target\THIRD-PARTY"
+  File "ui\target\THIRD-PARTY.txt"
   SetOutPath "$INSTDIR\bin"
   SetOverwrite ifnewer
   File "ui\target\bin\Pandemonium.exe"
@@ -140,7 +140,7 @@ Section Uninstall
   Delete "$INSTDIR\uninst.exe"
   RMDir /r "$INSTDIR\licenses"
   RMDIR /r "$INSTDIR\lib"
-  Delete "$INSTDIR\bin\THIRD-PARTY"
+  Delete "$INSTDIR\bin\THIRD-PARTY.txt"
   Delete "$INSTDIR\bin\Pandemonium.jar"
   Delete "$INSTDIR\bin\Pandemonium.exe"
 

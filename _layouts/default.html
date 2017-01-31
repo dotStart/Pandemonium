@@ -42,7 +42,7 @@
                         <div id="download-buttons">
                             {% for asset in site.github.releases[0].assets %}
                                 {% if asset.content_type == "application/x-msdownload" %}
-                                    <a href="#" class="ui disabled inverted huge button">
+                                    <a href="{{ asset.browser_download_url }}" class="ui inverted huge button">
                                         <i class="windows icon"></i>
                                         Windows
                                     </a>

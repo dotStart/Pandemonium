@@ -268,7 +268,7 @@
 
                     <Pane HBox.hgrow="ALWAYS" />
 
-                    <Button text="%settings.about.more" styleClass="copyright" />
+                    <Button text="%settings.about.more" styleClass="copyright" onAction="#onCopyrightView" />
                 </HBox>
             </VBox>
         </Tab>

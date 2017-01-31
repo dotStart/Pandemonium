@@ -24,6 +24,7 @@ import org.apache.logging.log4j.LogManager;
 import org.controlsfx.control.ToggleSwitch;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -429,6 +430,15 @@ public class SettingsWindow implements Initializable {
         }
 
         this.hostServices.showDocument(game.getMetadata().getReportingUrl());
+    }
+
+    @FXML
+    private void onCopyrightView(@Nonnull ActionEvent event) {
+        try {
+            Desktop.getDesktop().open(Paths.get("..", "THIRD-PARTY.txt").toFile());
+        } catch (IOException ex) {
+            throw new RuntimeException("Failed to display copyright information: " + ex.getMessage(), ex);
+        }
     }
     // </editor-fold>
 

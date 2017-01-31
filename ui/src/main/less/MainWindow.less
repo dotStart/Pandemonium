@@ -19,17 +19,29 @@
 @color-red: #D25252;
 @color-orange: #cb4b16;
 
-.title-bar .preset {
-  -fx-background-color: #212121;
-  -fx-background-radius: 3px;
-  -fx-spacing: 0;
+.title-bar {
+  .preset {
+    -fx-background-color: #212121;
+    -fx-background-radius: 3px;
+    -fx-spacing: 0;
 
-  .text-field {
-    -fx-padding: 4px;
+    .text-field {
+      -fx-padding: 4px;
 
-    -fx-border-color: #2B2B2B;
-    -fx-border-width: 0 2px 0 0;
-    -fx-background-color: transparent;
+      -fx-border-color: #2B2B2B;
+      -fx-border-width: 0 2px 0 0;
+      -fx-background-color: transparent;
+    }
+  }
+
+  .update-button {
+    .glyph-font {
+      -fx-text-fill: @color-red !important;
+    }
+
+    &:hover .glyph-font {
+      -fx-text-fill: lighten(@color-red, 5%) !important;
+    }
   }
 }
 

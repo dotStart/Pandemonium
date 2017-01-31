@@ -16,6 +16,7 @@
  */
 package tv.dotstart.pandemonium.fx.annotation;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,7 @@ import javax.annotation.Nonnull;
  *
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
+@Lazy
 @Component
 @Documented
 @Scope("prototype")

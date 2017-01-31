@@ -24,6 +24,7 @@ import com.sun.jna.platform.win32.WinNT;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -41,6 +42,7 @@ import tv.dotstart.pandemonium.process.exception.ProcessException;
 /**
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
+@Lazy
 @Component
 public class Win32ProcessAccessor implements ProcessAccessor {
     private static final Logger logger = LogManager.getFormatterLogger(Win32ProcessAccessor.class);

@@ -19,6 +19,7 @@ package tv.dotstart.pandemonium.ui.game;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -49,6 +50,7 @@ import tv.dotstart.pandemonium.process.exception.ProcessStateException;
  *
  * @author <a href="mailto:me@dotstart.tv">Johannes Donath</a>
  */
+@Lazy
 @Component
 public class ProcessWatcher {
     private static final Logger logger = LogManager.getFormatterLogger(ProcessWatcher.class);

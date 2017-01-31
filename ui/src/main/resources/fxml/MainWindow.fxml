@@ -47,7 +47,11 @@
             </IconButton>
         </HBox>
 
-        <IconButton fx:id="updateButton" styleClass="update-button" onAction="#onRequestUpdate" fontName="FontAwesome" glyphName="DOWNLOAD" />
+        <IconButton fx:id="updateButton" styleClass="update-button" onAction="#onRequestUpdate" fontName="FontAwesome" glyphName="DOWNLOAD">
+                <tooltip>
+                    <Tooltip text="%main.update" />
+                </tooltip>
+        </IconButton>
         <Button fx:id="settingsButton" onAction="#onRequestSettings"/>
     </buttons>
 

@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import javafx.application.HostServices;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -42,7 +43,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
-import javafx.stage.StageStyle;
 import tv.dotstart.pandemonium.fx.FX;
 import tv.dotstart.pandemonium.fx.annotation.ApplicationWindow;
 import tv.dotstart.pandemonium.fx.control.IconButton;
@@ -50,6 +50,7 @@ import tv.dotstart.pandemonium.fx.glyph.EmbeddedFontAwesome;
 import tv.dotstart.pandemonium.fx.localization.ConfigurationAwareMessageSource;
 import tv.dotstart.pandemonium.game.GameConfiguration;
 import tv.dotstart.pandemonium.preset.Preset;
+import tv.dotstart.pandemonium.ui.service.UpdateService;
 import tv.dotstart.pandemonium.ui.window.main.ActivityView;
 import tv.dotstart.pandemonium.ui.window.main.ConfigurationView;
 
@@ -67,7 +68,9 @@ public class MainWindow implements Initializable {
     private final BooleanProperty generatedPreset = new SimpleBooleanProperty();
 
     private final FX fx;
+    private final HostServices hostServices;
     private final ConfigurationAwareMessageSource messageSource;
+    private final UpdateService updateService;
 
     // <editor-fold desc="FXML">
     @FXML
@@ -76,6 +79,8 @@ public class MainWindow implements Initializable {
     private IconButton presetLoadIconButton;
     @FXML
     private IconButton presetCopyIconButton;
+    @FXML
+    private IconButton updateButton;
     @FXML
     private Button settingsButton;
 
@@ -93,9 +98,11 @@ public class MainWindow implements Initializable {
     private boolean skipButtonUpdate;
 
     @Autowired
-    public MainWindow(@Nonnull FX fx, @Nonnull ConfigurationAwareMessageSource messageSource) {
+    public MainWindow(@Nonnull FX fx, @Nonnull HostServices hostServices, @Nonnull ConfigurationAwareMessageSource messageSource, @Nonnull UpdateService updateService) {
         this.fx = fx;
+        this.hostServices = hostServices;
         this.messageSource = messageSource;
+        this.updateService = updateService;
     }
 
     /**
@@ -111,6 +118,8 @@ public class MainWindow implements Initializable {
         this.presetCopyIconButton.visibleProperty().bind(this.presetLoadIconButton.visibleProperty().not());
         this.presetCopyIconButton.managedProperty().bind(this.presetCopyIconButton.visibleProperty());
 
+        this.updateButton.visibleProperty().bind(this.updateService.updateUrlProperty().isNotEmpty());
+        this.updateButton.managedProperty().bind(this.updateButton.visibleProperty());
         this.settingsButton.setGraphic(EmbeddedFontAwesome.getInstance().create(FontAwesome.Glyph.COGS));
 
         this.activityView.visibleProperty().bind(this.activeProperty);
@@ -191,6 +200,15 @@ public class MainWindow implements Initializable {
                 .setModality(Modality.APPLICATION_MODAL)
                 .setTitle(this.messageSource.getMessage("settings.title"))
                 .buildAndShow();
+    }
+
+    /**
+     * Handles user requests to download an updated version.
+     */
+    @FXML
+    private void onRequestUpdate(@Nonnull ActionEvent event) {
+        // TODO: Maybe rather refer to an update page?
+        this.hostServices.showDocument("https://dotStart.github.io/Pandemonium/");
     }
 
     /**

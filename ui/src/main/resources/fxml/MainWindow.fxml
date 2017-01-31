@@ -47,6 +47,7 @@
             </IconButton>
         </HBox>
 
+        <IconButton fx:id="updateButton" styleClass="update-button" onAction="#onRequestUpdate" fontName="FontAwesome" glyphName="DOWNLOAD" />
         <Button fx:id="settingsButton" onAction="#onRequestSettings"/>
     </buttons>
 
